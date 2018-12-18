@@ -157,10 +157,12 @@ function checkForCollision() {
 
 // DOM Manipulation
 const $gameBoard = document.querySelector('.game-board');
+const $cover = document.querySelector('.cover');
 const $space = document.querySelector('.space');
 const $ship = document.querySelector('.space__ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
+const $startButton = document.querySelector('.start-button');
 const cssModifiers = {
   debris: 'space__object--debris',
   fuelSource: 'space__object--fuel',
@@ -219,6 +221,8 @@ function stop() {
 }
 
 function run() {
+  $cover.style.opacity = 0;
+  setTimeout(() => {$cover.style.display = 'none'}, 1000)
   listenForKeyDown();
   fuelInterval = setInterval(() => {
     reduceFuel();
@@ -236,7 +240,7 @@ function run() {
   setTimeout(addObject('debris'), randomDelay);
 };
 
-run();
+listenForButtonPress();
 
 // Utility Functions
 function cssString(value, unit) {

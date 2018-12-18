@@ -150,7 +150,7 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | JS Game Logic | H | 3hrs | 5.25hrs | 4hrs |
 | JS DOM Manip | H | 2hrs | 6.25hrs | 1hr |
 | JS Intervals | H | 1hr | 6.75hrs | .5hr |
-| Start Screen | M | 2hr |  |  |
+| Start Screen | M | 2hr | 7.75hrs | 1 |
 | End Game (basic) | M | 1hr |  |  |
 | End Game (animation) | L | 3hr |  |  |
 | Countdown Start | M | 1hr |  |  |
