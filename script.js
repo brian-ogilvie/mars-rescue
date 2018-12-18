@@ -27,7 +27,7 @@ const ship = new SpaceObject(0,5,2,2);
 let activeObjects = [];
 
 function listenForButtonPress() {
-  $startButton.addEventListener('click', run);
+  $startButton.addEventListener('click', handleGameStart);
 }
 
 function listenForKeyDown() {
@@ -76,7 +76,7 @@ function addObject(className) {
   // debris creation is called recursively by a random timeout (1-4 sec)
   if (className === 'debris') {
     const randomDelay = Math.floor(Math.random() * 3000) + 1000;
-    setTimeout(() => { addObject('debris') }, randomDelay);
+    createObjectTimeout = setTimeout(() => { addObject('debris') }, randomDelay);
   }
 }
 
@@ -125,7 +125,12 @@ function moveSpaceObjects() {
       removeSpaceObject(obj);
     }
     positionDomObjects();
-    checkForCollision();
+    if (!gameOver) { checkForCollision(); }
+    if (gameOver) {
+      if (activeObjects.length === 0) {
+        clearInterval(moveObjectsInterval);
+      }
+    }
   })
 }
 
@@ -208,21 +213,49 @@ function removeFromDom($element) {
 let fuelInterval = null;
 let distanceInterval = null;
 let fuelSourceInterval = null;
+let createObjectTimeout = null;
 let moveObjectsInterval = null;
 
 function stop() {
   clearInterval(fuelInterval);
   clearInterval(distanceInterval);
   clearInterval(fuelSourceInterval);
-  clearInterval(moveObjectsInterval);
+  clearTimeout(createObjectTimeout);
   if (fuel <= 0) {
     $fuel.style.width = 0;
   }
 }
 
+function handleGameStart() {
+  $cover.classList.add('cover--hidden');
+  setTimeout(() => {$cover.style.display = 'none'}, 1000);
+  //wait until cover is gone
+  setTimeout(() => {
+    countdownToRun(3);
+  }, 500)
+  // wait until the countdown is finished
+  setTimeout(() => {run()}, 4500);
+}
+
+function countdownToRun(count) {
+  displayCountdownInfo(count);
+  if (count > 0) {
+    count--;
+    setTimeout(() => {
+      countdownToRun(count > 0 ? count : 'Go!');
+    }, 1000);
+  }
+}
+
+function displayCountdownInfo(count) {
+  let $countdown = document.createElement('div');
+  $countdown.className = 'game-board__countdown';
+  $countdown.textContent = count.toString();
+  $gameBoard.append($countdown);
+  setTimeout(() => $countdown.remove(), 1000);
+}
+
 function run() {
-  $cover.style.opacity = 0;
-  setTimeout(() => {$cover.style.display = 'none'}, 1000)
   listenForKeyDown();
   fuelInterval = setInterval(() => {
     reduceFuel();
