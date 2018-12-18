@@ -27,7 +27,7 @@ const ship = new SpaceObject(0,5,2,2);
 let activeObjects = [];
 
 function listenForButtonPress() {
-  $startButton.addEventListener('click', run);
+  $startButton.addEventListener('click', handleGameStart);
 }
 
 function listenForKeyDown() {
@@ -210,6 +210,31 @@ let distanceInterval = null;
 let fuelSourceInterval = null;
 let moveObjectsInterval = null;
 
+function handleGameStart() {
+  $cover.classList.add('cover--hidden');
+  setTimeout(() => {$cover.style.display = 'none'}, 500);
+  //wait for cover to be gone
+  setTimeout(() => {countdownToRun(3);}, 500);
+  // wait for countdown to finish
+  setTimeout(() => {run();}, 4500);
+}
+
+function countdownToRun(count) {
+  displayCountdownInfo(count > 0 ? count : 'Go!');
+  if (count > 0) {
+    count--;
+    setTimeout(() => {countdownToRun(count)}, 1000);
+  }
+}
+
+function displayCountdownInfo(count) {
+  let $countdown = document.createElement('div');
+  $countdown.className = 'game-board__countdown';
+  $countdown.textContent = count.toString();
+  $gameBoard.append($countdown);
+  setTimeout(() => {$countdown.remove();}, 1000);
+}
+
 function stop() {
   clearInterval(fuelInterval);
   clearInterval(distanceInterval);
@@ -221,8 +246,6 @@ function stop() {
 }
 
 function run() {
-  $cover.style.opacity = 0;
-  setTimeout(() => {$cover.style.display = 'none'}, 1000)
   listenForKeyDown();
   fuelInterval = setInterval(() => {
     reduceFuel();
