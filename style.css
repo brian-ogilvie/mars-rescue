@@ -103,6 +103,17 @@ body {
   background-color: teal;
 }
 
+.console__speed {
+  width: 45px;
+  height: 45px;
+  background-image: url(./img/s_dark.png);
+  background-size: contain;
+}
+
+.console__speed--active {
+  background-image: url(./img/s_light.png);
+}
+
 .space {
   position: relative;
   width: 800px;

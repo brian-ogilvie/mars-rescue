@@ -151,10 +151,10 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | JS DOM Manip | H | 2hrs | 6.25hrs | 1hr |
 | JS Intervals | H | 1hr | 6.75hrs | .5hr |
 | Start Screen | M | 2hr | 7.75hrs | 1 |
-| End Game (basic) | M | 1hr |  |  |
+| End Game (basic) | M | 1hr | 9hrs | 1.25hrs |
+| Countdown Start | M | 1hr | 10hrs | 1hr |
+| Speed Boost | L | 2hrs | 10.5hrs | .5hr |
 | End Game (animation) | L | 3hr |  |  |
-| Countdown Start | M | 1hr |  |  |
-| Speed Boost | L | 2hrs |  |  |
 | Animated PNG | L | 3hrs |  |  |
 | Extra Gameplay feedback | L | 3hrs |  |  |
 | Difficulty Selection | L | 2hrs |  |  |

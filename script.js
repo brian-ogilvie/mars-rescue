@@ -7,8 +7,9 @@ const gridUnitPx = 50;
 let fuel = 100;
 let distanceTraveled = 0;
 let gameOver = false;
+let speedBoost = false;
 const fuelLossPerSecond = 5;
-const distanceToMars = 1000;
+const distanceToMars = 100;
 const distancePerSecond = 25;
 
 class SpaceObject {
@@ -38,20 +39,30 @@ function listenForKeyDown() {
 function handleKeyDown(event) {
   if (gameOver) { return }
   const keyCode = event.keyCode;
-  if (![37,38,39,40].includes(event.keyCode)) {return}
+  if (![37,38,39,40,83].includes(event.keyCode)) {return}
   event.preventDefault();
+  if (keyCode === 83) {
+    handleS();
+    return;
+  }
   handleArrows(keyCode);
 }
 
+function handleS() {
+  speedBoost = !speedBoost;
+  showSpeedStatus();
+}
+
 function handleArrows(keyCode) {
+  const distance = speedBoost ? 2 : 1;
   switch (keyCode) {
-    case 37: moveTo(ship.x - 1, ship.y);
+    case 37: moveTo(ship.x - distance, ship.y);
       break;
-    case 38: moveTo(ship.x, ship.y - 1);
+    case 38: moveTo(ship.x, ship.y - distance);
       break;
-    case 39: moveTo(ship.x + 1, ship.y);
+    case 39: moveTo(ship.x + distance, ship.y);
       break;
-    case 40: moveTo(ship.x, ship.y + 1);
+    case 40: moveTo(ship.x, ship.y + distance);
       break;
   }
 }
@@ -98,7 +109,7 @@ function moveTo(x,y) {
 }
 
 function reduceFuel() {
-  fuel -= fuelLossPerSecond;
+  fuel -= speedBoost ? fuelLossPerSecond * 2 : fuelLossPerSecond;
   showFuelStatus()
   if (fuel <= 0) {
     gameOver = true;
@@ -113,7 +124,7 @@ function replenishFuel() {
 
 function increaseDistance() {
   const intervalRate = distancePerSecond/5;
-  distanceTraveled += intervalRate;
+  distanceTraveled += speedBoost ? intervalRate * 1.5 : intervalRate;
   showTripProgress();
   if (distanceTraveled >= distanceToMars) {
     gameOver = true;
@@ -170,6 +181,7 @@ const $space = document.querySelector('.space');
 const $ship = document.querySelector('.space__ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
+const $speedStatus = document.querySelector('.console__speed');
 // const $startButton = document.querySelector('.start-button');
 const cssModifiers = {
   debris: 'space__object--debris',
@@ -201,6 +213,14 @@ function positionDomObjects() {
 
 function showFuelStatus() {
   $fuel.style.width = cssString(fuel, '%');
+}
+
+function showSpeedStatus() {
+  if (speedBoost) {
+    $speedStatus.classList.add('console__speed--active');
+  } else {
+    $speedStatus.classList.remove('console__speed--active');
+  }
 }
 
 function showTripProgress() {
@@ -245,10 +265,12 @@ function resetGame() {
   fuel = 100;
   distanceTraveled = 0;
   gameOver = false;
+  speedBoost = false;
   activeObjects = [];
   move$ship();
   showFuelStatus();
   showTripProgress();
+  showSpeedStatus();
   document.body.removeEventListener('keydown', handleKeyDown);
 }
 
