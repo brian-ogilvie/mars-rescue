@@ -135,9 +135,13 @@ body {
   z-index: 1;
 }
 
+.space__ship--crash {
+  background-color: red;
+}
+
 .space__object {
   position: absolute;
-  transition: left 0.11s linear;
+  transition: left 0.11s linear, opacity 0.5s;
 }
 
 .space__object--fuel {
@@ -146,6 +150,10 @@ body {
 
 .space__object--debris {
   background-color: dimgray;
+}
+
+.space__object--invisible {
+  opacity: 0;
 }
 
 .cover {
@@ -188,6 +196,10 @@ body {
 
 .cover__heading--2 {
   font-size: 2rem;
+}
+
+.cover__heading--failure {
+  color: orangered;
 }
 
 .cover__text {

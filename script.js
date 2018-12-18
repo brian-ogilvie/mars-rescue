@@ -9,7 +9,7 @@ let distanceTraveled = 0;
 let gameOver = false;
 let speedBoost = false;
 const fuelLossPerSecond = 5;
-const distanceToMars = 100;
+const distanceToMars = 1000;
 const distancePerSecond = 25;
 
 class SpaceObject {
@@ -142,10 +142,6 @@ function moveSpaceObjects() {
     if (!gameOver) {
       checkForCollision();
     }
-    if (activeObjects.length === 0 && gameOver) {
-      clearTimeout(addObjectTimeout);
-      clearInterval(moveObjectsInterval);
-    }
   })
 }
 
@@ -153,6 +149,13 @@ function removeSpaceObject(obj) {
   const index = activeObjects.findIndex(object => object.$el === obj.$el);
   activeObjects.splice(index, 1);
   removeFromDom(obj.$el);
+}
+
+function removeAllSpaceObjects() {
+  document.querySelectorAll('.space__object').forEach($object => {
+    $object.classList.add('space__object--invisible');
+    setTimeout(() => {removeFromDom($object)}, 600);
+  })
 }
 
 function checkForCollision() {
@@ -168,6 +171,7 @@ function checkForCollision() {
         removeSpaceObject(object);
       } else {
         gameOver = true;
+        displayCrash();
         handleGameOver();
       }
       return;
@@ -228,10 +232,18 @@ function showTripProgress() {
   $distance.style.width = cssString(percent, '%');
 }
 
-function displayWinnerCover() {
+function displayCrash() {
+  $ship.classList.add('space__ship--crash');
+}
+
+function displayGameOverCover(win) {
   let $cover = document.createElement('div');
   $cover.classList.add('cover', 'cover--translucent');
-  $cover.innerHTML = "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
+  if (win) {
+    $cover.innerHTML = "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
+  } else {
+    $cover.innerHTML = "<h1 class=\"cover__heading cover__heading--failure\">Mission Failure!</h1>";
+  }
   $cover.innerHTML += "<button class=\"start-button\">Play Again?</button>";
   $gameBoard.append($cover); 
   listenForButtonPress();
@@ -267,6 +279,8 @@ function resetGame() {
   gameOver = false;
   speedBoost = false;
   activeObjects = [];
+  removeAllSpaceObjects();
+  $ship.classList.remove('space__ship--crash');
   move$ship();
   showFuelStatus();
   showTripProgress();
@@ -292,15 +306,15 @@ function displayCountdownInfo(count) {
 
 function handleGameOver(win) {
   stop();
-  if (win) {
-    displayWinnerCover();
-  }
+  displayGameOverCover(win);
 }
 
 function stop() {
   clearInterval(fuelInterval);
   clearInterval(distanceInterval);
   clearInterval(fuelSourceInterval);
+  clearInterval(moveObjectsInterval);
+  clearTimeout(addObjectTimeout);
   if (fuel <= 0) {
     $fuel.style.width = 0;
   }
