@@ -27,17 +27,20 @@ const ship = new SpaceObject(0,5,2,2);
 let activeObjects = [];
 
 function listenForButtonPress() {
+  let $startButton = document.querySelector('.start-button');
   $startButton.addEventListener('click', handleGameStart);
 }
 
 function listenForKeyDown() {
-  document.body.addEventListener('keydown', (event) => {
-    if (gameOver) { return }
-    const keyCode = event.keyCode;
-    if (![37,38,39,40].includes(event.keyCode)) {return}
-    event.preventDefault();
-    handleArrows(keyCode);
-  });
+  document.body.addEventListener('keydown', handleKeyDown);
+}
+
+function handleKeyDown(event) {
+  if (gameOver) { return }
+  const keyCode = event.keyCode;
+  if (![37,38,39,40].includes(event.keyCode)) {return}
+  event.preventDefault();
+  handleArrows(keyCode);
 }
 
 function handleArrows(keyCode) {
@@ -76,7 +79,7 @@ function addObject(className) {
   // debris creation is called recursively by a random timeout (1-4 sec)
   if (className === 'debris') {
     const randomDelay = Math.floor(Math.random() * 3000) + 1000;
-    setTimeout(() => { addObject('debris') }, randomDelay);
+    addObjectTimeout = setTimeout(() => { addObject('debris') }, randomDelay);
   }
 }
 
@@ -99,7 +102,7 @@ function reduceFuel() {
   showFuelStatus()
   if (fuel <= 0) {
     gameOver = true;
-    stop();
+    handleGameOver();
   }
 }
 
@@ -114,7 +117,7 @@ function increaseDistance() {
   showTripProgress();
   if (distanceTraveled >= distanceToMars) {
     gameOver = true;
-    stop();
+    handleGameOver(true);
   }
 }
 
@@ -125,7 +128,13 @@ function moveSpaceObjects() {
       removeSpaceObject(obj);
     }
     positionDomObjects();
-    checkForCollision();
+    if (!gameOver) {
+      checkForCollision();
+    }
+    if (activeObjects.length === 0 && gameOver) {
+      clearTimeout(addObjectTimeout);
+      clearInterval(moveObjectsInterval);
+    }
   })
 }
 
@@ -148,7 +157,7 @@ function checkForCollision() {
         removeSpaceObject(object);
       } else {
         gameOver = true;
-        stop();
+        handleGameOver();
       }
       return;
     }
@@ -157,12 +166,11 @@ function checkForCollision() {
 
 // DOM Manipulation
 const $gameBoard = document.querySelector('.game-board');
-const $cover = document.querySelector('.cover');
 const $space = document.querySelector('.space');
 const $ship = document.querySelector('.space__ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
-const $startButton = document.querySelector('.start-button');
+// const $startButton = document.querySelector('.start-button');
 const cssModifiers = {
   debris: 'space__object--debris',
   fuelSource: 'space__object--fuel',
@@ -200,6 +208,15 @@ function showTripProgress() {
   $distance.style.width = cssString(percent, '%');
 }
 
+function displayWinnerCover() {
+  let $cover = document.createElement('div');
+  $cover.classList.add('cover', 'cover--translucent');
+  $cover.innerHTML = "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
+  $cover.innerHTML += "<button class=\"start-button\">Play Again?</button>";
+  $gameBoard.append($cover); 
+  listenForButtonPress();
+}
+
 function removeFromDom($element) {
   $element.remove();
 }
@@ -208,15 +225,31 @@ function removeFromDom($element) {
 let fuelInterval = null;
 let distanceInterval = null;
 let fuelSourceInterval = null;
+let addObjectTimeout = null;
 let moveObjectsInterval = null;
 
 function handleGameStart() {
+  resetGame();
+  let $cover = document.querySelector('.cover');
   $cover.classList.add('cover--hidden');
-  setTimeout(() => {$cover.style.display = 'none'}, 500);
+  setTimeout(() => {$cover.remove();}, 500);
   //wait for cover to be gone
   setTimeout(() => {countdownToRun(3);}, 500);
   // wait for countdown to finish
   setTimeout(() => {run();}, 4500);
+}
+
+function resetGame() {
+  ship.x = 0;
+  ship.y = 5;
+  fuel = 100;
+  distanceTraveled = 0;
+  gameOver = false;
+  activeObjects = [];
+  move$ship();
+  showFuelStatus();
+  showTripProgress();
+  document.body.removeEventListener('keydown', handleKeyDown);
 }
 
 function countdownToRun(count) {
@@ -235,11 +268,17 @@ function displayCountdownInfo(count) {
   setTimeout(() => {$countdown.remove();}, 1000);
 }
 
+function handleGameOver(win) {
+  stop();
+  if (win) {
+    displayWinnerCover();
+  }
+}
+
 function stop() {
   clearInterval(fuelInterval);
   clearInterval(distanceInterval);
   clearInterval(fuelSourceInterval);
-  clearInterval(moveObjectsInterval);
   if (fuel <= 0) {
     $fuel.style.width = 0;
   }

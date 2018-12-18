@@ -44,6 +44,7 @@ body {
   font-family: Inconsolata, monospace;
   font-size: 18rem;
   text-transform: uppercase;
+  cursor: none;
   animation: fade-out 0.8s linear;
 }
 
@@ -147,12 +148,19 @@ body {
   background-color: black;
   border-radius: 7px;
   z-index: 2;
-  transition: top 0.5s ease-in, bottom 0.5s ease-in;
+  transition: top 0.5s ease-in, bottom 0.5s ease-in, opacity 0.5s;
+}
+
+.cover--translucent {
+  background-color: rgba(0,0,0,0.8);
+  animation: fade-in 1s linear;
+  padding-top: 35%;
 }
 
 .cover--hidden {
   top: 100%;
   bottom: -100%;
+  opacity: 0;
 }
 
 .cover__section {
@@ -231,6 +239,15 @@ body {
   to {
     transform: scale(.5,.5);
     opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
