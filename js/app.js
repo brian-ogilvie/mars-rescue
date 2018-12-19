@@ -244,6 +244,11 @@ function positionDomObjects() {
 
 function showFuelStatus() {
   $fuel.style.width = cssString(fuel, '%');
+  if (fuel <= 20) {
+    $fuel.classList.add('console__measurement--blink');
+  } else {
+    $fuel.classList.remove('console__measurement--blink');
+  }
 }
 
 function showSpeedStatus() {
@@ -257,6 +262,12 @@ function showSpeedStatus() {
 function showTripProgress() {
   const percent = Math.floor(100 * (distanceTraveled/distanceToMars));
   $distance.style.width = cssString(percent, '%');
+  if (percent >= 85) {
+    $distance.classList.add('console__measurement--blink');
+  } else {
+    $distance.classList.remove('console__measurement--blink');
+  }
+
 }
 
 function displayCrash() {

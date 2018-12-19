@@ -98,6 +98,10 @@ body {
   transition: width 0.5s;
 }
 
+.console__measurement--blink {
+  animation: blink 0.5s linear infinite;
+}
+
 .console__measurement--fuel {
   width: 100%;
   background-color: orange;
@@ -280,7 +284,7 @@ body {
   border-radius: 7px;
   border: 4px ridge darkgrey;
   cursor: pointer;
-  text-shadow: 0 0 4px gold;
+  text-shadow: 1px 1px 4px black;
   transition: all 0.5s;
   animation: pulse 1s linear infinite;
   transform-origin: bottom;
@@ -296,6 +300,12 @@ body {
   }
   50% {
     transform: scale(1.05,1.05);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: .5;
   }
 }
 
