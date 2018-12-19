@@ -214,11 +214,11 @@ function move$ship(direction) {
 
 let turnFrontTimeout = null;
 function turnShipFront() {
-  // I always want to wait 1 sec after the last key press
+  // I always want to clear this to wait until after the last key press
   clearTimeout(turnFrontTimeout);
   turnFrontTimeout = setTimeout(() => {
     $ship.classList.remove('ship--up', 'ship--down');
-  }, 200);
+  }, 300);
 }
 
 function addObjectToDom(object) {
