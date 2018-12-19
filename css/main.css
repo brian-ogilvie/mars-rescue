@@ -275,20 +275,19 @@ body {
   bottom: 20px;
   left: 40%;
   right: 40%;
-  color: black;
-  background-color: white;
+  color: orangered;
+  background-image: radial-gradient(ellipse at 0 100%, white 15%, #222222 100%);
   border-radius: 7px;
   border: 4px ridge darkgrey;
   cursor: pointer;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  transition: all 0.3s;
+  text-shadow: 0 0 4px gold;
+  transition: all 0.5s;
   animation: pulse 1s linear infinite;
   transform-origin: bottom;
 }
 
 .start-button:hover {
-  color: orangered;
-  background-image: radial-gradient(ellipse at 0 100%, #222222 15%, white 100%);
+  text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 4px gold, 0 0 6px gold, 0 0 8px gold, 0 0 12px gold;
 }
 
 @keyframes pulse {
