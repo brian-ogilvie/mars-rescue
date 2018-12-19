@@ -13,7 +13,7 @@ html, body {
 
 body {
   background-color: orangered;
-  background-image: url(./img/mars_bg.jpg);
+  background-image: url(../assets/mars_bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -109,19 +109,19 @@ body {
 .console__speed {
   width: 45px;
   height: 45px;
-  background-image: url(./img/s_dark.png);
+  background-image: url(../assets/s_dark.png);
   background-size: contain;
 }
 
 .console__speed--active {
-  background-image: url(./img/s_light.png);
+  background-image: url(../assets/s_light.png);
 }
 
 .space {
   position: relative;
   width: 800px;
   height: 600px;
-  background-image: url(./img/stars_bg.jpg);
+  background-image: url(../assets/stars_bg.jpg);
   border-radius: 0 0 7px 7px;
   overflow: hidden;
   cursor: none;
@@ -133,7 +133,7 @@ body {
   height: 100px;
   top: 250px;
   left: 0;
-  background-image: url(./img/shipAnimated.png);
+  background-image: url(../assets/shipAnimated.png);
   background-size: contain;
   background-repeat: no-repeat;
   transition: top .3s, left .3s, transform 0.3s;
@@ -141,7 +141,7 @@ body {
 }
 
 .space__ship--crash {
-  background-image: url(./img/explode.png);
+  background-image: url(../assets/explode.png);
   transform: scale(1.3,1.3);
   background-size: cover;
   transition: transform 1s, opacity 1s;
@@ -159,7 +159,7 @@ body {
 }
 
 .space__object--fuel {
-  background-image: url(./img/fuel_source.png);
+  background-image: url(../assets/fuel_source.png);
 }
 
 .space__object--debris {
@@ -168,11 +168,11 @@ body {
 }
 
 .debris--small {
-  background-image: url(./img/small_debris.png);
+  background-image: url(../assets/small_debris.png);
 }
 
 .debris--large {
-  background-image: url(./img/big_debris.png);
+  background-image: url(../assets/big_debris.png);
 }
 
 .space__object--invisible {
