@@ -154,9 +154,13 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | End Game (basic) | M | 1hr | 9hrs | 1.25hrs |
 | Countdown Start | M | 1hr | 10hrs | 1hr |
 | Speed Boost | L | 2hrs | 10.5hrs | .5hr |
+| Background Images | L | 3hrs | 11.5hrs | 1hrs |
 | End Game (animation) | L | 3hr |  |  |
-| Animated PNG | L | 3hrs |  |  |
+| Update Instructions | H | 1hr |  |  |
+| Turn Ship | L | 1hr |  |  |
 | Extra Gameplay feedback | L | 3hrs |  |  |
+| Different Types of debris | L | 1hr |  |  |
+| Retract Dashboard | L | 1hr |  |  |
 | Difficulty Selection | L | 2hrs |  |  |
 | Total |  | 26hrs|  |  |
 

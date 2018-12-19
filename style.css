@@ -13,6 +13,9 @@ html, body {
 
 body {
   background-color: orangered;
+  background-image: url(./img/mars_bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,7 +121,7 @@ body {
   position: relative;
   width: 800px;
   height: 600px;
-  background-color: black;
+  background-image: url(./img/stars_bg.jpg);
   border-radius: 0 0 7px 7px;
   overflow: hidden;
   cursor: none;
@@ -130,13 +133,24 @@ body {
   height: 100px;
   top: 250px;
   left: 0;
-  background-color: skyblue;
+  background-image: url(./img/shipAnimated.png);
+  background-size: contain;
+  background-repeat: no-repeat;
   transition: top .3s, left .3s, transform 0.3s;
   z-index: 1;
 }
 
 .space__ship--crash {
-  background-color: red;
+  background-image: url(./img/explode.png);
+  transform: scale(1.3,1.3);
+  background-size: cover;
+  transition: transform 1s, opacity 1s;
+}
+
+.space__ship--invisible {
+  animation: fade-out 0.3s linear;
+  transition: none;
+  opacity: 0;
 }
 
 .space__object {
@@ -145,11 +159,20 @@ body {
 }
 
 .space__object--fuel {
-  background-color: red;
+  background-image: url(./img/fuel_source.png);
 }
 
 .space__object--debris {
+  animation: spin 0.5s linear infinite;
   background-color: dimgray;
+}
+
+.debris--small {
+  background-image: url(./img/small_debris.png);
+}
+
+.debris--large {
+  background-image: url(./img/big_debris.png);
 }
 
 .space__object--invisible {
@@ -171,7 +194,7 @@ body {
 }
 
 .cover--translucent {
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.6);
   animation: fade-in 1s linear;
   padding-top: 35%;
 }
@@ -226,7 +249,7 @@ body {
   font-size: 1.2rem;
   width: 20%;
   position: absolute;
-  bottom: 5px;
+  bottom: 20px;
   left: 40%;
   right: 40%;
   color: black;
@@ -243,6 +266,8 @@ body {
 .start-button:hover {
   color: orangered;
   background-image: radial-gradient(ellipse at 0 100%, #222222 15%, white 100%);
+  transform: scale(1.1,1.1);
+  animation: none;
 }
 
 @keyframes pulse {
@@ -271,6 +296,18 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes spin {
+  33% {
+    transform: rotate(120deg);
+  }
+  66% {
+    transform: rotate(240deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 

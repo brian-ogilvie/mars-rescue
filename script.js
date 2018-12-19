@@ -152,6 +152,7 @@ function removeSpaceObject(obj) {
 }
 
 function removeAllSpaceObjects() {
+  activeObjects = [];
   document.querySelectorAll('.space__object').forEach($object => {
     $object.classList.add('space__object--invisible');
     setTimeout(() => {removeFromDom($object)}, 600);
@@ -186,10 +187,11 @@ const $ship = document.querySelector('.space__ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
 const $speedStatus = document.querySelector('.console__speed');
-// const $startButton = document.querySelector('.start-button');
 const cssModifiers = {
   debris: 'space__object--debris',
   fuelSource: 'space__object--fuel',
+  smallDebris: 'debris--small',
+  largeDebris: 'debris--large',
 }
 
 function move$ship() {
@@ -201,6 +203,9 @@ function addObjectToDom(object) {
   const $object = document.createElement('div');
   $object.className = 'space__object';
   $object.classList.add(cssModifiers[object.class]);
+  if (object.class === 'debris') {
+    $object.classList.add(object.size.w === 1 ? cssModifiers['smallDebris'] : cssModifiers['largeDebris']);
+  }
   $object.style.top = cssString(object.y * gridUnitPx, 'px');
   $object.style.left = cssString(object.x * gridUnitPx, 'px');
   $object.style.width = cssString(object.size.w * gridUnitPx, 'px');
@@ -234,6 +239,9 @@ function showTripProgress() {
 
 function displayCrash() {
   $ship.classList.add('space__ship--crash');
+  setTimeout(() => {
+    $ship.classList.add('space__ship--invisible');
+  }, 500);
 }
 
 function displayGameOverCover(win) {
@@ -272,20 +280,23 @@ function handleGameStart() {
 }
 
 function resetGame() {
-  ship.x = 0;
-  ship.y = 5;
   fuel = 100;
   distanceTraveled = 0;
   gameOver = false;
   speedBoost = false;
-  activeObjects = [];
-  removeAllSpaceObjects();
-  $ship.classList.remove('space__ship--crash');
-  move$ship();
+  // activeObjects = [];
+  resetShip();
   showFuelStatus();
   showTripProgress();
   showSpeedStatus();
   document.body.removeEventListener('keydown', handleKeyDown);
+}
+
+function resetShip() {
+  ship.x = 0;
+  ship.y = 5;
+  move$ship();
+  $ship.classList.remove('space__ship--crash', 'space__ship--invisible');
 }
 
 function countdownToRun(count) {
@@ -315,6 +326,7 @@ function stop() {
   clearInterval(fuelSourceInterval);
   clearInterval(moveObjectsInterval);
   clearTimeout(addObjectTimeout);
+  removeAllSpaceObjects();
   if (fuel <= 0) {
     $fuel.style.width = 0;
   }
