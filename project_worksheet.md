@@ -155,8 +155,8 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | Countdown Start | M | 1hr | 10hrs | 1hr |
 | Speed Boost | L | 2hrs | 10.5hrs | .5hr |
 | Background Images | L | 3hrs | 11.5hrs | 1hrs |
+| Update Instructions | H | 1hr | 12hrs | .5hr |
 | End Game (animation) | L | 3hr |  |  |
-| Update Instructions | H | 1hr |  |  |
 | Turn Ship | L | 1hr |  |  |
 | Extra Gameplay feedback | L | 3hrs |  |  |
 | Different Types of debris | L | 1hr |  |  |

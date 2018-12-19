@@ -58,11 +58,11 @@ function handleArrows(keyCode) {
   switch (keyCode) {
     case 37: moveTo(ship.x - distance, ship.y);
       break;
-    case 38: moveTo(ship.x, ship.y - distance);
+    case 38: moveTo(ship.x, ship.y - distance, 'up');
       break;
     case 39: moveTo(ship.x + distance, ship.y);
       break;
-    case 40: moveTo(ship.x, ship.y + distance);
+    case 40: moveTo(ship.x, ship.y + distance, 'down');
       break;
   }
 }
@@ -98,14 +98,14 @@ function randomRate(minPerSec, maxPerSec) {
   return Math.floor(Math.random() * (maxPerSec - minPerSec)) + minPerSec;
 }
 
-function moveTo(x,y) {
+function moveTo(x,y, direction) {
   if (x < 0) { x = 0; } // Keep in horizontal bounds
   if (x + ship.size.w > gridWidth) { x = gridWidth - ship.size.w; }
   if (y < 0) { y = 0; } // Keep in vertical bounds
   if (y + ship.size.h > gridHeight) { y = gridHeight - ship.size.h; }
   ship.x = x;
   ship.y = y;
-  move$ship();
+  move$ship(direction);
 }
 
 function reduceFuel() {
@@ -183,7 +183,7 @@ function checkForCollision() {
 // DOM Manipulation
 const $gameBoard = document.querySelector('.game-board');
 const $space = document.querySelector('.space');
-const $ship = document.querySelector('.space__ship');
+const $ship = document.querySelector('.ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
 const $speedStatus = document.querySelector('.console__speed');
@@ -194,9 +194,31 @@ const cssModifiers = {
   largeDebris: 'debris--large',
 }
 
-function move$ship() {
+function move$ship(direction) {
   $ship.style.top = cssString(ship.y * gridUnitPx, 'px');
   $ship.style.left = cssString(ship.x * gridUnitPx, 'px');
+  switch (direction) {
+    case 'up': 
+      $ship.classList.add('ship--up');
+      $ship.classList.remove('ship--down');
+      break;
+    case 'down':
+      $ship.classList.add('ship--down');
+      $ship.classList.remove('ship--up');
+      break;
+    default:
+      $ship.classList.remove('ship--up', 'ship--down');
+  }
+  turnShipFront();
+}
+
+let turnFrontTimeout = null;
+function turnShipFront() {
+  // I always want to wait 1 sec after the last key press
+  clearTimeout(turnFrontTimeout);
+  turnFrontTimeout = setTimeout(() => {
+    $ship.classList.remove('ship--up', 'ship--down');
+  }, 200);
 }
 
 function addObjectToDom(object) {
@@ -238,9 +260,9 @@ function showTripProgress() {
 }
 
 function displayCrash() {
-  $ship.classList.add('space__ship--crash');
+  $ship.classList.add('ship--crash');
   setTimeout(() => {
-    $ship.classList.add('space__ship--invisible');
+    $ship.classList.add('ship--invisible');
   }, 500);
 }
 
@@ -284,7 +306,6 @@ function resetGame() {
   distanceTraveled = 0;
   gameOver = false;
   speedBoost = false;
-  // activeObjects = [];
   resetShip();
   showFuelStatus();
   showTripProgress();
@@ -296,7 +317,7 @@ function resetShip() {
   ship.x = 0;
   ship.y = 5;
   move$ship();
-  $ship.classList.remove('space__ship--crash', 'space__ship--invisible');
+  $ship.classList.remove('ship--crash', 'ship--invisible');
 }
 
 function countdownToRun(count) {

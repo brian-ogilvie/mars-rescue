@@ -127,7 +127,7 @@ body {
   cursor: none;
 }
 
-.space__ship {
+.ship {
   position: absolute;
   width: 100px;
   height: 100px;
@@ -140,14 +140,22 @@ body {
   z-index: 1;
 }
 
-.space__ship--crash {
+.ship--up {
+  transform: rotate(-10deg);
+}
+
+.ship--down {
+  transform: rotate(10deg);
+}
+
+.ship--crash {
   background-image: url(../assets/explode.png);
   transform: scale(1.3,1.3);
   background-size: cover;
   transition: transform 1s, opacity 1s;
 }
 
-.space__ship--invisible {
+.ship--invisible {
   animation: fade-out 0.3s linear;
   transition: none;
   opacity: 0;
