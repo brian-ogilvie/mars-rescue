@@ -247,8 +247,10 @@ function showFuelStatus() {
   $fuel.style.width = cssString(fuel, '%');
   if (fuel <= 20) {
     $fuel.classList.add('console__measurement--blink');
+    $ship.classList.add('ship--sputter');
   } else {
     $fuel.classList.remove('console__measurement--blink');
+    $ship.classList.remove('ship--sputter');
   }
 }
 
@@ -329,7 +331,7 @@ function resetShip() {
   ship.x = 0;
   ship.y = 5;
   move$ship();
-  $ship.classList.remove('ship--crash', 'ship--invisible');
+  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter');
 }
 
 function countdownToRun(count) {
@@ -350,6 +352,10 @@ function displayCountdownInfo(count) {
 
 function handleGameOver(win) {
   stop();
+  if (fuel <= 0) {
+    $ship.classList.add('ship--empty');
+    $ship.classList.remove('ship--sputter');
+  }
   displayGameOverCover(win);
 }
 
@@ -359,6 +365,8 @@ function stop() {
   clearInterval(fuelSourceInterval);
   clearInterval(moveObjectsInterval);
   clearTimeout(addObjectTimeout);
+  $distance.classList.remove('console__measurement--blink');
+  $fuel.classList.remove('console__measurement--blink');
   removeAllSpaceObjects();
   if (fuel <= 0) {
     $fuel.style.width = 0;

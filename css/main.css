@@ -158,6 +158,18 @@ body {
   transform: rotate(10deg);
 }
 
+.ship--sputter {
+  animation: sputter 0.5s step-start 0s infinite;
+}
+
+.ship--empty {
+  background-image: url('../assets/ship_no_fire.png');
+  animation: spin 4s linear infinite, drift 6s linear;
+  transform-origin: 65% 50%;
+  opacity: 0;
+  transition: opacity 6s ease-in;
+}
+
 .ship--crash {
   background-image: url(../assets/explode.png);
   transform: scale(1.3,1.3);
@@ -338,6 +350,22 @@ body {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  100% {
+    top: 100%;
+    left: 70%;
+  }
+}
+
+@keyframes sputter {
+  0% {
+    background-image: url(../assets/shipAnimated.png);
+  }
+  20% {
+    background-image: url(../assets/ship_no_fire.png);
   }
 }
 
