@@ -38,14 +38,15 @@ function listenForKeyDown() {
 
 function handleKeyDown(event) {
   if (gameOver) { return }
-  const keyCode = event.keyCode;
-  if (![37,38,39,40,83].includes(event.keyCode)) {return}
+  const key = event.key;
+  const acceptableKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 's']
+  if (!acceptableKeys.includes(event.key)) {return}
   event.preventDefault();
-  if (keyCode === 83) {
+  if (key === 's') {
     handleS();
     return;
   }
-  handleArrows(keyCode);
+  handleArrows(key);
 }
 
 function handleS() {
@@ -53,16 +54,16 @@ function handleS() {
   showSpeedStatus();
 }
 
-function handleArrows(keyCode) {
+function handleArrows(key) {
   const distance = speedBoost ? 2 : 1;
-  switch (keyCode) {
-    case 37: moveTo(ship.x - distance, ship.y);
+  switch (key) {
+    case 'ArrowLeft': moveTo(ship.x - distance, ship.y);
       break;
-    case 38: moveTo(ship.x, ship.y - distance, 'up');
+    case 'ArrowUp': moveTo(ship.x, ship.y - distance, 'up');
       break;
-    case 39: moveTo(ship.x + distance, ship.y);
+    case 'ArrowRight': moveTo(ship.x + distance, ship.y);
       break;
-    case 40: moveTo(ship.x, ship.y + distance, 'down');
+    case 'ArrowDown': moveTo(ship.x, ship.y + distance, 'down');
       break;
   }
 }
