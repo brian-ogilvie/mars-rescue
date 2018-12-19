@@ -266,8 +266,6 @@ body {
 .start-button:hover {
   color: orangered;
   background-image: radial-gradient(ellipse at 0 100%, #222222 15%, white 100%);
-  transform: scale(1.1,1.1);
-  animation: none;
 }
 
 @keyframes pulse {
