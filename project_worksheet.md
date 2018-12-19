@@ -210,5 +210,5 @@ Eventually I settled on the soludion above, which checked each object on it's ow
 The second problem was exactly when to do the collision checking: when the ship moved, when the SpaceObjects moved, or both. I decided just to call this function every time the SpaceObjects moved for two reasons: 1) They might collide with the ship without any input from the user, and 2) The SpaceObjects are moved five times per second, which seemed plenty often enough without also having to run the check every time the user pressed a key.
 
 #### SAMPLE.....
-**ERROR**: app.js:34 Uncaught SyntaxError: Unexpected identifier                                
-**RESOLUTION**: Missing comma after first object in sources {} object
+**ERROR**: Uncaught SyntaxError: missing ) after argument list                                
+**RESOLUTION**: This project is filled with roughly a gajillion timeouts and intervals, all firing at different rates (some of them randomly generated). Many of them had to be cleared out and reset based on certain events in the game. The syntax kept getting the better of me, causing errors and odd behavior. Usually it was one of the following 3 problems: a missing comma before the ms parameter, writing said parameter in seconds rather than ms, or forgetting to pass that parameter at all after writing a complicated function as the first agrument.
