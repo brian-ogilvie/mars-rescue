@@ -55,7 +55,8 @@ body {
   width: 100%;
   padding: 0 10px;
   height: 58px;
-  background-color: lightgray;
+  /*background-color: lightgray;*/
+  background-image: url(../assets/console_bg.jpg);
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
