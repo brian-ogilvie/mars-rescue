@@ -132,9 +132,11 @@ body {
   display: none;
   width: 200px;
   height: 200px;
-  background-color: green;
+  background-image: url(../assets/mobile_arrows.png);
   transform: rotate(-45deg);
   border-radius: 50%;
+  border: 2px solid black;
+  box-shadow: 2px 2px 6px black;
 }
 
 .space {
@@ -381,6 +383,8 @@ body {
   .console__meter {
     width: 100%;
     margin: 15px auto;
+    height: 25px;
+    border-width: 2px;
   }
   .console__speed {
     order: -1;
@@ -393,10 +397,6 @@ body {
   .ship {
     width: 62.5px;
     height: 62.5px;
-  }
-  .console__meter {
-    height: 20px;
-    border-width: 2px;
   }
   .debris--small, .space__object--fuel {
     width: 31.25px;
