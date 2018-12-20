@@ -352,7 +352,7 @@ function displayCountdownInfo(count) {
   let $countdown = document.createElement('div');
   $countdown.className = 'game-board__countdown';
   $countdown.textContent = count.toString();
-  $gameBoard.append($countdown);
+  $space.append($countdown);
   setTimeout(() => {$countdown.remove();}, 1000);
 }
 
