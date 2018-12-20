@@ -128,6 +128,15 @@ body {
   background-image: url(../assets/s_light.png);
 }
 
+.console__arrows {
+  display: none;
+  width: 200px;
+  height: 200px;
+  background-color: green;
+  transform: rotate(-45deg);
+  border-radius: 50%;
+}
+
 .space {
   position: relative;
   width: 800px;
@@ -300,6 +309,10 @@ body {
   animation: pulse 1s linear infinite;
 }
 
+.instructions--mobile {
+  display: none;
+}
+
 .cover__img {
   display: inline-block;
   height: 25px;
@@ -395,6 +408,15 @@ body {
   }
   .cover--translucent {
     padding-right: 39%;
+  }
+  .instructions--mobile {
+    display: inline;
+  }
+  .instructions--desktop {
+    display: none;
+  }
+  .console__arrows {
+    display: block;
   }
 }
 

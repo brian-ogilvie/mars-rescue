@@ -35,6 +35,11 @@ function listenForKeyDown() {
   document.body.addEventListener('keydown', handleKeyDown);
 }
 
+function listenForMobileEvents() {
+  $mobileArrows.addEventListener('click', handleMobileArrows);
+  $speedStatus.addEventListener('click', handleS);
+}
+
 function handleKeyDown(event) {
   if (gameOver) { return }
   const key = event.key;
@@ -54,16 +59,29 @@ function handleS() {
 }
 
 function handleArrows(key) {
-  const distance = speedBoost ? 2 : 1;
   switch (key) {
-    case 'ArrowLeft': moveTo(ship.x - distance, ship.y);
+    case 'ArrowLeft': move('left');
       break;
-    case 'ArrowUp': moveTo(ship.x, ship.y - distance, 'up');
+    case 'ArrowUp': move('up');
       break;
-    case 'ArrowRight': moveTo(ship.x + distance, ship.y);
+    case 'ArrowRight': move('right');
       break;
-    case 'ArrowDown': moveTo(ship.x, ship.y + distance, 'down');
+    case 'ArrowDown': move('down');
       break;
+  }
+}
+
+function handleMobileArrows(event) { 
+  const x = event.offsetX;
+  const y = event.offsetY;
+  if (x >= 100 && y < 100) { 
+    move('up');
+  } else if (x >= 100 && y >= 100) {
+    move('right');
+  } else if (x < 100 && y < 100) {
+    move('left');
+  } else {
+    move('down');
   }
 }
 
@@ -98,7 +116,23 @@ function randomRate(minPerSec, maxPerSec) {
   return Math.floor(Math.random() * (maxPerSec - minPerSec)) + minPerSec;
 }
 
-function moveTo(x,y, direction) {
+function move(direction) {
+  const distance = speedBoost ? 2 : 1;
+  let x = ship.x;
+  let y = ship.y;
+  switch (direction) {
+    case 'up':
+      y -= distance;
+      break;
+    case 'right':
+      x += distance;
+      break;
+    case 'down':
+      y += distance;
+      break;
+    default: 
+      x -= distance;
+  }
   if (x < 0) { x = 0; } // Keep in horizontal bounds
   if (x + ship.size.w > gridWidth) { x = gridWidth - ship.size.w; }
   if (y < 0) { y = 0; } // Keep in vertical bounds
@@ -187,6 +221,7 @@ const $ship = document.querySelector('.ship');
 const $fuel = document.querySelector('.console__measurement--fuel');
 const $distance = document.querySelector('.console__measurement--distance');
 const $speedStatus = document.querySelector('.console__speed');
+const $mobileArrows = document.querySelector('.console__arrows');
 const cssModifiers = {
   debris: 'space__object--debris',
   fuelSource: 'space__object--fuel',
@@ -331,6 +366,8 @@ function resetGame() {
   showTripProgress();
   showSpeedStatus();
   document.body.removeEventListener('keydown', handleKeyDown);
+  $mobileArrows.removeEventListener('click', handleMobileArrows);
+  $speedStatus.removeEventListener('click', handleS);
 }
 
 function resetShip() {
@@ -381,6 +418,7 @@ function stop() {
 
 function run() {
   listenForKeyDown();
+  listenForMobileEvents();
   fuelInterval = setInterval(() => {
     reduceFuel();
   }, 1000);
