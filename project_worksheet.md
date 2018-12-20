@@ -158,8 +158,9 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | Update Instructions | H | 1hr | 12hrs | .5hr |
 | Turn Ship | L | 1hr | 12.25hrs | .25hr |
 | event.key | H | 1hr | 12.5hrs | .25hr |
+| Extra Gameplay feedback | L | 3hrs | 14.5hrs | 2.25hrs |
+| Responsive Design | H | 2hrs |  |  |
 | End Game (animation) | L | 3hr |  |  |
-| Extra Gameplay feedback | L | 3hrs |  |  |
 | Different Types of debris | L | 1hr |  |  |
 | Retract Dashboard | L | 1hr |  |  |
 | Difficulty Selection | L | 2hrs |  |  |

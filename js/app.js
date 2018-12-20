@@ -1,7 +1,6 @@
 // Board Constants
 const gridWidth = 16;
 const gridHeight = 12;
-const gridUnitPx = 50;
 
 // Game Variables
 let fuel = 100;
@@ -196,8 +195,10 @@ const cssModifiers = {
 }
 
 function move$ship(direction) {
-  $ship.style.top = cssString(ship.y * gridUnitPx, 'px');
-  $ship.style.left = cssString(ship.x * gridUnitPx, 'px');
+  const top = getPercentage(ship.y, gridHeight);
+  const left = getPercentage(ship.x, gridWidth);
+  $ship.style.top = cssString(top, '%');
+  $ship.style.left = cssString(left, '%');
   switch (direction) {
     case 'up': 
       $ship.classList.add('ship--up');
@@ -229,17 +230,18 @@ function addObjectToDom(object) {
   if (object.class === 'debris') {
     $object.classList.add(object.size.w === 1 ? cssModifiers['smallDebris'] : cssModifiers['largeDebris']);
   }
-  $object.style.top = cssString(object.y * gridUnitPx, 'px');
-  $object.style.left = cssString(object.x * gridUnitPx, 'px');
-  $object.style.width = cssString(object.size.w * gridUnitPx, 'px');
-  $object.style.height = cssString(object.size.h * gridUnitPx, 'px');
+  const top = getPercentage(object.y, gridHeight);
+  const left = getPercentage(object.x, gridWidth);
+  $object.style.top = cssString(top, '%');
+  $object.style.left = cssString(left, '%');
   $space.append($object);
   object.$el = $object;
 }
 
 function positionDomObjects() {
-  activeObjects.forEach(obj => {
-    obj.$el.style.left = cssString(obj.x * gridUnitPx, 'px');
+  activeObjects.forEach(object => {
+    const left = getPercentage(object.x, gridWidth);
+    object.$el.style.left = cssString(left, '%');
   })
 }
 
@@ -275,6 +277,7 @@ function showTripProgress() {
 
 function displayCrash() {
   $ship.classList.add('ship--crash');
+  $ship.classList.remove('ship--sputter');
   setTimeout(() => {
     $ship.classList.add('ship--invisible');
   }, 500);
@@ -283,12 +286,15 @@ function displayCrash() {
 function displayGameOverCover(win) {
   let $cover = document.createElement('div');
   $cover.classList.add('cover', 'cover--translucent');
+  let $section1 = document.createElement('div');
+  $section1.classList.add('cover__section', 'cover__section--game-over');
   if (win) {
-    $cover.innerHTML = "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
+    $section1.innerHTML += "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
   } else {
-    $cover.innerHTML = "<h1 class=\"cover__heading cover__heading--failure\">Mission Failure!</h1>";
+    $section1.innerHTML += "<h1 class=\"cover__heading cover__heading--failure\">Mission Failure!</h1>";
   }
-  $cover.innerHTML += "<button class=\"start-button\">Play Again?</button>";
+  $cover.append($section1);
+  $cover.innerHTML += "<div class=\"cover__section cover__section--buttons\"><button class=\"start-button\">Play Again?</button></div>";
   $gameBoard.append($cover); 
   listenForButtonPress();
 }
@@ -396,4 +402,7 @@ listenForButtonPress();
 // Utility Functions
 function cssString(value, unit) {
   return value.toString() + unit.toString();
+}
+function getPercentage(amount, ofTotal) {
+  return 100*amount/ofTotal;
 }

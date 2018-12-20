@@ -65,7 +65,7 @@ body {
 }
 
 .console__meter {
-  width: 300px;
+  width: 40%;
   height: 30px;
   border: 4px ridge dimgray;
   border-radius: 8px;
@@ -121,6 +121,7 @@ body {
   height: 45px;
   background-image: url(../assets/s_dark.png);
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .console__speed--active {
@@ -141,7 +142,7 @@ body {
   position: absolute;
   width: 100px;
   height: 100px;
-  top: 250px;
+  top: 50%;
   left: 0;
   background-image: url(../assets/shipAnimated.png);
   background-size: contain;
@@ -198,10 +199,14 @@ body {
 
 .debris--small {
   background-image: url(../assets/small_debris.png);
+  width: 50px;
+  height: 50px;
 }
 
 .debris--large {
   background-image: url(../assets/big_debris.png);
+  width: 100px;
+  height: 100px;
 }
 
 .space__object--invisible {
@@ -215,17 +220,26 @@ body {
   right: 0;
   bottom: 0;
   padding: 15px;
-  overflow: scroll;
+  overflow: hidden;
   background-color: black;
   border-radius: 7px;
   z-index: 2;
   transition: top 0.5s ease-in, bottom 0.5s ease-in, opacity 0.5s;
 }
 
+.cover--full-page {
+  display: none;
+  border-radius: 0;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 4;
+}
+
 .cover--translucent {
   background-color: rgba(0,0,0,0.6);
   animation: fade-in 1s linear;
-  padding-top: 35%;
 }
 
 .cover--hidden {
@@ -235,7 +249,23 @@ body {
 }
 
 .cover__section {
-  margin-bottom: 20px;
+  overflow: scroll;
+  height: 90%;
+}
+
+.cover__section--game-over {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover__section--buttons {
+  padding: 20px;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .cover__heading {
@@ -263,14 +293,8 @@ body {
   font-weight: bold;
 }
 
-.cover__text--gray {
-  color: dimgray;
-  font-weight: bold;
-}
-
-.cover__text--red {
-  color: red;
-  font-weight: bold;
+.cover__text--pulse {
+  animation: pulse 1s linear infinite;
 }
 
 .cover__img {
@@ -284,13 +308,8 @@ body {
 }
 
 .start-button {
-  padding: 6px;
+  padding: 6px 12px;
   font-size: 1.2rem;
-  width: 20%;
-  position: absolute;
-  bottom: 20px;
-  left: 40%;
-  right: 40%;
   color: orangered;
   background-image: radial-gradient(ellipse at 0 100%, white 15%, #222222 100%);
   border-radius: 7px;
@@ -306,6 +325,62 @@ body {
   text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 4px gold, 0 0 6px gold, 0 0 8px gold, 0 0 12px gold;
 }
 
+
+/* Media Queries */
+@media only screen and (max-width: 816px) and (orientation: portrait) {
+  .cover--full-page {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 816px) and (orientation: landscape) {
+  html, body {
+    font-size: 13px; 
+  }
+  .cover {
+    border-radius: 11px;
+  }
+  .game-board {
+    height: 329px;
+    width: 400px;
+    border-width: 4px;
+  }
+  .start-button {
+    padding: 0;
+  }
+  .console {
+    height: 29px;
+    border-width: 4px;
+    border-radius: 11px 11px 0 0;
+  }
+  .space {
+    width: 400px;
+    height: 300px;
+    border-radius: 0 0 11px 11px;
+  }
+  .console__speed {
+    width: 21px;
+    height: 21px;
+  }
+  .ship {
+    width: 50px;
+    height: 50px;
+  }
+  .console__meter {
+    height: 20px;
+    border-width: 2px;
+  }
+  .debris--small {
+    width: 25px;
+    height: 25px;
+  }
+  .debris--large {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Keyframe Animation */
 @keyframes pulse {
   0%, 100% {
     transform: scale(1,1);
