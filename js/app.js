@@ -10,8 +10,8 @@ let speedBoost = false;
 let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
-const distanceToMars = 1000;
-const distancePerSecond = 25;
+const distanceToMars = 100;
+const distancePerSecond = 3;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -156,6 +156,7 @@ function reduceFuel() {
     if (fuel <= 0) {
       gameOver = true;
       handleGameOver();
+      return;
     }    
   }
   showFuelStatus()
@@ -164,13 +165,15 @@ function reduceFuel() {
 
 function increaseDistance() {
   if (gameOver) { return; }
-  const intervalRate = distancePerSecond/5;
+  const intervalRate = distancePerSecond/60;
   distanceTraveled += speedBoost ? intervalRate * 1.5 : intervalRate;
   showTripProgress();
   if (distanceTraveled >= distanceToMars) {
     gameOver = true;
     handleGameOver(true);
+    return;
   }
+  distanceAnimation = requestAnimationFrame(increaseDistance);
 }
 
 function moveSpaceObjects() {
@@ -309,9 +312,9 @@ function showSpeedStatus() {
 }
 
 function showTripProgress() {
-  const percent = Math.floor(100 * (distanceTraveled/distanceToMars));
-  $distance.style.width = cssString(percent, '%');
-  if (percent >= 85) {
+  // const percent = Math.floor(100 * (distanceTraveled/distanceToMars));
+  $distance.style.width = cssString(distanceTraveled, '%');
+  if (distanceTraveled >= 85) {
     $distance.classList.add('console__measurement--blink');
   } else {
     $distance.classList.remove('console__measurement--blink');
@@ -349,7 +352,8 @@ function removeFromDom($element) {
 
 // Game Initialization
 let fuelAnimation = null;
-let distanceInterval = null;
+// let distanceInterval = null;
+let distanceAnimation = null;
 let fuelSourceInterval = null;
 let addObjectTimeout = null;
 let objectsAnimation = null;
@@ -370,6 +374,7 @@ function resetGame() {
   distanceTraveled = 0;
   gameOver = false;
   speedBoost = false;
+  replenishFuel = false;
   resetShip();
   showFuelStatus();
   showTripProgress();
@@ -413,7 +418,7 @@ function handleGameOver(win) {
 
 function stop() {
   cancelAnimationFrame(fuelAnimation);
-  clearInterval(distanceInterval);
+  cancelAnimationFrame(distanceAnimation);
   clearInterval(fuelSourceInterval);
   cancelAnimationFrame(objectsAnimation);
   clearTimeout(addObjectTimeout);
@@ -429,9 +434,7 @@ function run() {
   listenForKeyDown();
   listenForMobileEvents();
   fuelAnimation = requestAnimationFrame(reduceFuel);
-  distanceInterval = setInterval(() => {
-    increaseDistance();
-  }, 200);
+  distanceAnimation = requestAnimationFrame(increaseDistance);
   fuelSourceInterval = setInterval(() => {
     addObject('fuelSource');
   }, 8000);
