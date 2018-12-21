@@ -5,7 +5,16 @@ Your Mission: Following an equipment failure, humanity's top astrobiologist is s
 [Click here to play the game now!](https://pages.git.generalassemb.ly/brianogilvie/mars-rescue/)
 
 ## Technologies Used:
-This project is built using vanilla Javascript and basic DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts. 
+This project is built using vanilla Javascript and basic DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts/requestAnimationFrames.
+
+## How To Play:
+Your mission is a success when your trip progress meter reaches 100%. You'll have to dodge all the debris and collect sufficient fuel to last that long.
+
+### Desktop:
+Control your ship with your keyboard arrow keys. Toggle your speed boost with the "S" key.
+
+### Mobile:
+On mobile devices, a virtual set of arrows appears on the console. Control your ship by tapping those. Toggle your speed boost by tapping the "S" in the console. 
 
 ## Wireframes:
 [Game In Progress](https://res.cloudinary.com/brian-ogilvie/image/upload/v1545078425/Project%201%20Wireframes/Game%20In%20Progress.jpg)
@@ -33,4 +42,4 @@ If all four of these conditions were true, there was a collision! Then I evaluat
 Given the small screen and lack of physical keyboard on mobile devices, responsiveness requires a signifigant redesign. In order to maximize the play space, the game console is moved to the side, rather than on top. Also, a virtual set of arrows appears in the console to give the user the ability to control the ship. 
 
 ### The Future
-The next version of this game will have a more dramatic ending, with the ship safely landing on Mars to rescue the stranded scientist. Also, I expect that converting my play space to a JS Canvas and using requestAnimationFrame in place of setInterval and setTimeout will have a marked impact on smoothness and performance. 
+The next version of this game will have a more dramatic ending, with the ship safely landing on Mars to rescue the stranded scientist. Also, I expect that converting my play space to a JS Canvas will have a marked impact on smoothness and performance. 
