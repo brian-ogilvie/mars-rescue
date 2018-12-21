@@ -19,10 +19,13 @@ This project is built using vanilla Javascript and basic DOM manipulation. All s
 ## Additional Information
 ### Design Approach
 From the onset, I felt that the most challenging part of this project would be making the UI smooth and responsive. This meant that having a stable, reliable model was of the utmost importance early on. My collision detection evaluates four conditions for every space object every time they move: 
-    - The object's X coordinate is less than the ship's X coordinate plus it's width
-    - Object's X + it's width is greater than the ship's X
-    - Object's Y + it's height is greater than the ship's Y
-    - Object's Y is less than the ship's Y plus it's height
+- The object's X coordinate is less than the ship's X coordinate plus it's width
+
+- Object's X + it's width is greater than the ship's X
+
+- Object's Y + it's height is greater than the ship's Y
+
+- Object's Y is less than the ship's Y plus it's height
     
 If all four of these conditions were true, there was a collision! Once this logic was running reliably, I was able to focus on animation and design. 
 
