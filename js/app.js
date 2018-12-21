@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 20;
+const distancePerSecond = 3;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -377,7 +377,10 @@ function handleGameStart() {
   $cover.classList.add('cover--hidden');
   setTimeout(() => {$cover.remove();}, 500);
   //wait for cover to be gone
-  setTimeout(() => {countdownToRun(3);}, 500);
+  setTimeout(() => {
+    countdownToRun(3);
+    displayLevelInfo();
+  }, 500);
   // wait for countdown to finish
   setTimeout(() => {run();}, 4500);
 }
@@ -421,6 +424,14 @@ function displayCountdownInfo(count) {
   setTimeout(() => {$countdown.remove();}, 1000);
 }
 
+function displayLevelInfo() {
+  let $level = document.createElement('div');
+  $level.className = 'game-board__level';
+  $level.textContent = `Level ${(currentLevel + 1).toString()}`;
+  $space.append($level);
+  setTimeout(() => {$level.remove();}, 4000);
+}
+
 function handleGameOver(win) {
   stop();
   if (fuel <= 0) {
@@ -458,7 +469,6 @@ function stop() {
 }
 
 function run() {
-  console.log(`current level: ${currentLevel}`);
   listenForKeyDown();
   listenForMobileEvents();
   fuelSourceInterval = setInterval(() => {
