@@ -5,7 +5,7 @@ Your Mission: Following an equipment failure, humanity's top astrobiologist is s
 [Click here to play the game now!](https://pages.git.generalassemb.ly/brianogilvie/mars-rescue/)
 
 ## Technologies Used:
-This project is built using vanilla Javascript and basic DOM manipulation. All styling and layout is done with CSS. 
+This project is built using vanilla Javascript and basic DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts. 
 
 ## Wireframes:
 [Game In Progress](https://res.cloudinary.com/brian-ogilvie/image/upload/v1545078425/Project%201%20Wireframes/Game%20In%20Progress.jpg)
@@ -19,15 +19,18 @@ This project is built using vanilla Javascript and basic DOM manipulation. All s
 ## Additional Information
 ### Design Approach
 From the onset, I felt that the most challenging part of this project would be making the UI smooth and responsive. This meant that having a stable, reliable model was of the utmost importance early on. My collision detection evaluates four conditions for every space object every time they move: 
-- The object's X coordinate is less than the ship's X coordinate plus it's width
+- The object's X coordinate is less than the ship's X coordinate + it's width
 
 - Object's X + it's width is greater than the ship's X
 
 - Object's Y + it's height is greater than the ship's Y
 
-- Object's Y is less than the ship's Y plus it's height
+- Object's Y is less than the ship's Y + it's height
     
-If all four of these conditions were true, there was a collision! Once this logic was running reliably, I was able to focus on animation and design. 
+If all four of these conditions were true, there was a collision! Then I evaluate whether the colliding object was space debris or a fuel source and respond accordingly. Once this logic was running reliably, I was able to focus on animation and design. Getting the animation to run smoothly was a delecate dance between the distance between JS intervals and the length of CSS transitions. 
 
 ### Mobile Responsiveness
 Given the small screen and lack of physical keyboard on mobile devices, responsiveness requires a signifigant redesign. In order to maximize the play space, the game console is moved to the side, rather than on top. Also, a virtual set of arrows appears in the console to give the user the ability to control the ship. 
+
+### The Future
+The next version of this game will have a more dramatic ending, with the ship safely landing on Mars to rescue the stranded scientist. Also, I expect that converting my play space to a JS Canvas and using requestAnimationFrame in place of setInterval and setTimeout will have a marked impact on smoothness and performance. 
