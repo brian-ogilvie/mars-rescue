@@ -143,6 +143,7 @@ function move(direction) {
 }
 
 function reduceFuel() {
+  if (gameOver) { return; }
   fuel -= speedBoost ? fuelLossPerSecond * 2 : fuelLossPerSecond;
   showFuelStatus()
   if (fuel <= 0) {
@@ -157,6 +158,7 @@ function replenishFuel() {
 }
 
 function increaseDistance() {
+  if (gameOver) { return; }
   const intervalRate = distancePerSecond/5;
   distanceTraveled += speedBoost ? intervalRate * 1.5 : intervalRate;
   showTripProgress();
@@ -167,8 +169,9 @@ function increaseDistance() {
 }
 
 function moveSpaceObjects() {
+  if (gameOver) { return; }
   activeObjects.forEach(obj => {
-    obj.x -= obj.rate/10;
+    obj.x -= obj.rate/60;
     if (obj.x <= 0 - obj.rate) {
       removeSpaceObject(obj);
     }
@@ -177,6 +180,7 @@ function moveSpaceObjects() {
       checkForCollision();
     }
   })
+  objectsAnimation = requestAnimationFrame(moveSpaceObjects);
 }
 
 function removeSpaceObject(obj) {
@@ -343,7 +347,7 @@ let fuelInterval = null;
 let distanceInterval = null;
 let fuelSourceInterval = null;
 let addObjectTimeout = null;
-let moveObjectsInterval = null;
+let objectsAnimation = null;
 
 function handleGameStart() {
   resetGame();
@@ -406,7 +410,7 @@ function stop() {
   clearInterval(fuelInterval);
   clearInterval(distanceInterval);
   clearInterval(fuelSourceInterval);
-  clearInterval(moveObjectsInterval);
+  cancelAnimationFrame(objectsAnimation);
   clearTimeout(addObjectTimeout);
   $distance.classList.remove('console__measurement--blink');
   $fuel.classList.remove('console__measurement--blink');
@@ -428,9 +432,7 @@ function run() {
   fuelSourceInterval = setInterval(() => {
     addObject('fuelSource');
   }, 8000);
-  moveObjectsInterval = setInterval(() => {
-    moveSpaceObjects();
-  }, 100);
+  objectsAnimation = requestAnimationFrame(moveSpaceObjects);
   const randomDelay = Math.floor(Math.random() * 2000) + 1000;
   setTimeout(addObject('debris'), randomDelay);
 };
