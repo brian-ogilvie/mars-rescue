@@ -5,13 +5,14 @@ const gridHeight = 12;
 // Game Variables
 let fuel = 100;
 let distanceTraveled = 0;
+let currentLevel = 0;
 let gameOver = false;
 let speedBoost = false;
 let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 3;
+const distancePerSecond = 20;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -23,6 +24,23 @@ class SpaceObject {
     }
   }
 }
+
+class Level {
+  constructor(minDebrisSpeed, maxDebrisSpeed, maxDebrisFrequency, minFuelSpeed, maxFuelSpeed, fuelFrequency) {
+    this.minDebrisSpeed = minDebrisSpeed;
+    this.maxDebrisSpeed = maxDebrisSpeed;
+    this.maxDebrisFrequency = maxDebrisFrequency;
+    this.minFuelSpeed = minFuelSpeed;
+    this.maxFuelSpeed = maxFuelSpeed;
+    this.fuelFrequency = fuelFrequency;
+  }
+}
+
+const levels = [
+  new Level(6, 10, 3000, 3, 6, 8000),
+  new Level(10, 12, 1500, 4, 7, 8000),
+  new Level(13, 15, 0, 5, 8, 9000),
+]; 
 
 // Game Logic
 const ship = new SpaceObject(0,5,2,2);
@@ -95,12 +113,13 @@ function handleMobileArrows(event) {
 */
 function addObject(className) {
   if (gameOver) { return };
+  const level = levels[currentLevel];
   const x = gridWidth;
   const y = Math.floor(Math.random() * gridHeight);
   const w = className === 'debris' ? Math.floor(Math.random() * 2) + 1 : 1;
   const object = new SpaceObject(x, y, w, w);
-  const minRate = className === 'debris' ? 6 : 3;
-  const maxRate = className === 'debris' ? 10 : 6;
+  const minRate = className === 'debris' ? level.minDebrisSpeed : level.minFuelSpeed;
+  const maxRate = className === 'debris' ? level.maxDebrisSpeed : level.maxFuelSpeed;
   const rate = randomRate(minRate, maxRate);
   object.rate = rate;
   object.x += rate;
@@ -109,7 +128,7 @@ function addObject(className) {
   addObjectToDom(object);
   // debris creation is called recursively by a random timeout (1-4 sec)
   if (className === 'debris') {
-    const randomDelay = Math.floor(Math.random() * 3000) + 1000;
+    const randomDelay = Math.floor(Math.random() * level.maxDebrisFrequency) + 1000;
     addObjectTimeout = setTimeout(() => { addObject('debris') }, randomDelay);
   }
 }
@@ -408,7 +427,14 @@ function handleGameOver(win) {
     $ship.classList.add('ship--empty');
     $ship.classList.remove('ship--sputter');
   }
+  if (win) {
+    currentLevel = incrementLevel(currentLevel);
+  }
   displayGameOverCover(win);
+}
+
+function incrementLevel(level) {
+  return level < levels.length - 1 ? level + 1 : levels.length - 1;
 }
 
 function requestAnimation() {
@@ -432,6 +458,7 @@ function stop() {
 }
 
 function run() {
+  console.log(`current level: ${currentLevel}`);
   listenForKeyDown();
   listenForMobileEvents();
   fuelSourceInterval = setInterval(() => {
