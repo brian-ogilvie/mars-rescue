@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-  background-color: orangered;
+  background-color: black;
   background-image: url(../assets/mars_bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -55,7 +55,6 @@ body {
   width: 100%;
   padding: 0 10px;
   height: 58px;
-  /*background-color: lightgray;*/
   background-image: url(../assets/console_bg.jpg);
   display: flex;
   flex-flow: row nowrap;
@@ -96,7 +95,6 @@ body {
   height: 100%;
   border-radius: 0 5px 5px 0;
   border: 1px solid rgba(0,0,0,0.5));
-  transition: width 0.5s;
 }
 
 .console__measurement--blink {
@@ -115,6 +113,7 @@ body {
   background-color: teal;
   box-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 2px #fff inset, 0 0 4px #fff inset, 0 0 6px chartreuse, 0 0 10px chartreuse, 0 0 12px chartreuse, 0 0 15px chartreuse, 0 0 20px chartreuse;
   background: linear-gradient(to bottom, #009669 0%,#cff720 39%,#009669 100%);
+  transition: width 0.5s;
 }
 
 .console__speed {

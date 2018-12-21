@@ -7,7 +7,9 @@ let fuel = 100;
 let distanceTraveled = 0;
 let gameOver = false;
 let speedBoost = false;
+let replenishFuel = false;
 const fuelLossPerSecond = 5;
+const fuelReplenishPerSecond = 50;
 const distanceToMars = 1000;
 const distancePerSecond = 25;
 
@@ -144,17 +146,20 @@ function move(direction) {
 
 function reduceFuel() {
   if (gameOver) { return; }
-  fuel -= speedBoost ? fuelLossPerSecond * 2 : fuelLossPerSecond;
-  showFuelStatus()
-  if (fuel <= 0) {
-    gameOver = true;
-    handleGameOver();
+  if (replenishFuel) {
+    fuel += fuelReplenishPerSecond/60;
+    if (fuel >= 100) {
+      replenishFuel = false;
+    }
+  } else {
+    fuel -= speedBoost ? 2 * fuelLossPerSecond/60 : fuelLossPerSecond/60;
+    if (fuel <= 0) {
+      gameOver = true;
+      handleGameOver();
+    }    
   }
-}
-
-function replenishFuel() {
-  fuel = 100;
-  showFuelStatus();
+  showFuelStatus()
+  fuelAnimation = requestAnimationFrame(reduceFuel);
 }
 
 function increaseDistance() {
@@ -206,7 +211,7 @@ function checkForCollision() {
     condition4 = object.y + object.size.h > ship.y;
     if (condition1 && condition2 && condition3 && condition4) {
       if (object.class === 'fuelSource') {
-        replenishFuel();
+        replenishFuel = true;
         removeSpaceObject(object);
       } else {
         gameOver = true;
@@ -343,7 +348,7 @@ function removeFromDom($element) {
 }
 
 // Game Initialization
-let fuelInterval = null;
+let fuelAnimation = null;
 let distanceInterval = null;
 let fuelSourceInterval = null;
 let addObjectTimeout = null;
@@ -407,7 +412,7 @@ function handleGameOver(win) {
 }
 
 function stop() {
-  clearInterval(fuelInterval);
+  cancelAnimationFrame(fuelAnimation);
   clearInterval(distanceInterval);
   clearInterval(fuelSourceInterval);
   cancelAnimationFrame(objectsAnimation);
@@ -423,9 +428,7 @@ function stop() {
 function run() {
   listenForKeyDown();
   listenForMobileEvents();
-  fuelInterval = setInterval(() => {
-    reduceFuel();
-  }, 1000);
+  fuelAnimation = requestAnimationFrame(reduceFuel);
   distanceInterval = setInterval(() => {
     increaseDistance();
   }, 200);
