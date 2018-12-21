@@ -160,7 +160,6 @@ function reduceFuel() {
     }    
   }
   showFuelStatus()
-  fuelAnimation = requestAnimationFrame(reduceFuel);
 }
 
 function increaseDistance() {
@@ -173,7 +172,6 @@ function increaseDistance() {
     handleGameOver(true);
     return;
   }
-  distanceAnimation = requestAnimationFrame(increaseDistance);
 }
 
 function moveSpaceObjects() {
@@ -188,7 +186,6 @@ function moveSpaceObjects() {
       checkForCollision();
     }
   })
-  objectsAnimation = requestAnimationFrame(moveSpaceObjects);
 }
 
 function removeSpaceObject(obj) {
@@ -351,12 +348,9 @@ function removeFromDom($element) {
 }
 
 // Game Initialization
-let fuelAnimation = null;
-// let distanceInterval = null;
-let distanceAnimation = null;
+let animationRequest = null;
 let fuelSourceInterval = null;
 let addObjectTimeout = null;
-let objectsAnimation = null;
 
 function handleGameStart() {
   resetGame();
@@ -372,6 +366,7 @@ function handleGameStart() {
 function resetGame() {
   fuel = 100;
   distanceTraveled = 0;
+  // cancelAnimationFrame(animationRequest);
   gameOver = false;
   speedBoost = false;
   replenishFuel = false;
@@ -416,11 +411,17 @@ function handleGameOver(win) {
   displayGameOverCover(win);
 }
 
+function requestAnimation() {
+  if (gameOver) { return }
+  moveSpaceObjects();
+  reduceFuel();
+  increaseDistance();
+  animationRequest = requestAnimationFrame(requestAnimation);
+}
+
 function stop() {
-  cancelAnimationFrame(fuelAnimation);
-  cancelAnimationFrame(distanceAnimation);
+  cancelAnimationFrame(animationRequest);
   clearInterval(fuelSourceInterval);
-  cancelAnimationFrame(objectsAnimation);
   clearTimeout(addObjectTimeout);
   $distance.classList.remove('console__measurement--blink');
   $fuel.classList.remove('console__measurement--blink');
@@ -433,12 +434,10 @@ function stop() {
 function run() {
   listenForKeyDown();
   listenForMobileEvents();
-  fuelAnimation = requestAnimationFrame(reduceFuel);
-  distanceAnimation = requestAnimationFrame(increaseDistance);
   fuelSourceInterval = setInterval(() => {
     addObject('fuelSource');
   }, 8000);
-  objectsAnimation = requestAnimationFrame(moveSpaceObjects);
+  animationRequest = requestAnimationFrame(requestAnimation);
   const randomDelay = Math.floor(Math.random() * 2000) + 1000;
   setTimeout(addObject('debris'), randomDelay);
 };
