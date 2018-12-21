@@ -2,10 +2,7 @@
 Your Mission: Following an equipment failure, humanity's top astrobiologist is stranded on Mars. NASA needs you to pilot the rescue mission. You will have to navigate a treacherous journey, littered with space debris. You will also need to collect fuel floating in space along the way. If you run out of fuel or collide with debris, your mission is a failure. Humanity is counting on you!
 
 ## Deployed Game: 
-[Click here to play the game now!](https://pages.git.generalassemb.ly/brianogilvie/mars-rescue/)
-
-## Technologies Used:
-This project is built using vanilla Javascript and basic DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts/requestAnimationFrames.
+[Click here to play Mars Rescue now!](https://pages.git.generalassemb.ly/brianogilvie/mars-rescue/)
 
 ## How To Play:
 Your mission is a success when your trip progress meter reaches 100%. You'll have to dodge all the debris and collect sufficient fuel to last that long.
@@ -15,6 +12,9 @@ Control your ship with your keyboard arrow keys. Toggle your speed boost with th
 
 ### Mobile:
 On mobile devices, a virtual set of arrows appears on the console. Control your ship by tapping those. Toggle your speed boost by tapping the "S" in the console. 
+
+## Technologies Used:
+This project is built using vanilla Javascript and DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts/requestAnimationFrames.
 
 ## Wireframes:
 [Game In Progress](https://res.cloudinary.com/brian-ogilvie/image/upload/v1545078425/Project%201%20Wireframes/Game%20In%20Progress.jpg)
@@ -36,7 +36,7 @@ From the onset, I felt that the most challenging part of this project would be m
 
 - Object's Y is less than the ship's Y + it's height
     
-If all four of these conditions were true, there was a collision! Then I evaluate whether the colliding object was space debris or a fuel source and respond accordingly. Once this logic was running reliably, I was able to focus on animation and design. Getting the animation to run smoothly was a delecate dance between the distance between JS intervals and the length of CSS transitions. 
+If all four of these conditions were true, there was a collision! Then I evaluate whether the colliding object was space debris or a fuel source and respond accordingly. Once this logic was running reliably, I was able to focus on animation and design. Getting the animation to run smoothly was a delecate dance between the timimg of JS intervals and the length of CSS transitions. 
 
 ### Mobile Responsiveness
 Given the small screen and lack of physical keyboard on mobile devices, responsiveness requires a signifigant redesign. In order to maximize the play space, the game console is moved to the side, rather than on top. Also, a virtual set of arrows appears in the console to give the user the ability to control the ship. 
