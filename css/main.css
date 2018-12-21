@@ -364,7 +364,7 @@ body {
   }
 }
 
-@media only screen and (max-width: 816px) and (orientation: landscape) {
+@media only screen and (max-width: 816px) {
   html, body {
     font-size: 13px; 
   }
