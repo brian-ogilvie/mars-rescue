@@ -13,6 +13,9 @@ Control your ship with your keyboard arrow keys. Toggle your speed boost with th
 ### Mobile:
 On mobile devices, a virtual set of arrows appears on the console. Control your ship by tapping those. Toggle your speed boost by tapping the "S" in the console. 
 
+## Demo Video
+<iframe src="https://www.youtube.com/embed/tyaY4UtiBn0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"> </iframe>
+
 ## Technologies Used:
 This project is built using vanilla Javascript and DOM manipulation. All styling and layout is done with CSS. The animation is created by a combination of CSS transitions, CSS keyframe animation, and javascript intervals/timeouts/requestAnimationFrames.
 

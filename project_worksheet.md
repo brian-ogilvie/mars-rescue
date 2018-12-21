@@ -146,26 +146,28 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | Component | Priority | Estimated Time | Time Invetsted | Actual Time |
 | --- | :---: |  :---: | :---: | :---: |
 | HTML Layout | H | 1hr | .25hr | .25hr |
-| Basic CSS | H | 2hrs| 1.25hr | 1hr |
-| JS Game Logic | H | 3hrs | 5.25hrs | 4hrs |
-| JS DOM Manip | H | 2hrs | 6.25hrs | 1hr |
-| JS Intervals | H | 1hr | 6.75hrs | .5hr |
-| Start Screen | M | 2hr | 7.75hrs | 1 |
-| End Game (basic) | M | 1hr | 9hrs | 1.25hrs |
-| Countdown Start | M | 1hr | 10hrs | 1hr |
-| Speed Boost | L | 2hrs | 10.5hrs | .5hr |
-| Background Images | L | 3hrs | 11.5hrs | 1hrs |
-| Update Instructions | H | 1hr | 12hrs | .5hr |
-| Turn Ship | L | 1hr | 12.25hrs | .25hr |
-| event.key | H | 1hr | 12.5hrs | .25hr |
-| Extra Gameplay feedback | L | 3hrs | 14.5hrs | 2.25hrs |
-| Responsive Design | H | 2hrs | 18.5hrs | 4hrs |
-| Mobile Device Interaction | 2hrs |  |  |
+| Basic CSS | H | 2hrs| 1hr | 1hr |
+| JS Game Logic | H | 3hrs | 4hrs | 4hrs |
+| JS DOM Manip | H | 2hrs | 1hr | 1hr |
+| JS Intervals | H | 1hr | .5hr | .5hr |
+| Start Screen | M | 2hr | 1hr | 1hr |
+| End Game (basic) | M | 1hr | 1.25hrs | 1.25hrs |
+| Countdown Start | M | 1hr | 1hr | 1hr |
+| Speed Boost | L | 2hrs | .5hr | .5hr |
+| Background Images | L | 3hrs | 1hr | 1hrs |
+| Update Instructions | H | 1hr | .5hr | .5hr |
+| Turn Ship | L | 1hr | .25hr | .25hr |
+| event.key | H | 1hr | .25hr | .25hr |
+| Extra Gameplay feedback | L | 3hrs | 2.25hrs | 2.25hrs |
+| Responsive Design | H | 2hrs | 4hrs | 4hrs |
+| Responsive Redesign | M | 2hrs | 2hrs | 2hrs |
+| Mobile Device Interaction | H | 2hrs | 2hrs | 2hrs |
+| Better animation | L | 2hrs | 2hrs | 2hrs |
 | End Game (animation) | L | 3hr |  |  |
 | Different Types of debris | L | 1hr |  |  |
 | Retract Dashboard | L | 1hr |  |  |
 | Difficulty Selection | L | 2hrs |  |  |
-| Total |  | 26hrs|  |  |
+| Total |  | 39hrs| 32hrs | 32hrs |
 
 ## Helper Functions
 
