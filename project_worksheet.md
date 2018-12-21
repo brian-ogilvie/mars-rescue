@@ -163,11 +163,12 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | Responsive Redesign | M | 2hrs | 2hrs | 2hrs |
 | Mobile Device Interaction | H | 2hrs | 2hrs | 2hrs |
 | Better animation | L | 2hrs | 2hrs | 2hrs |
+| Progressing Levels | L | 1hr | 1hr | 1hr |
 | End Game (animation) | L | 3hr |  |  |
 | Different Types of debris | L | 1hr |  |  |
 | Retract Dashboard | L | 1hr |  |  |
 | Difficulty Selection | L | 2hrs |  |  |
-| Total |  | 39hrs| 32hrs | 32hrs |
+| Total |  | 40hrs| 33hrs | 33hrs |
 
 ## Helper Functions
 
