@@ -480,8 +480,11 @@ function run() {
   setTimeout(addObject('debris'), randomDelay);
 };
 
-listenForStartButton();
-listenForKeyDown();
+
+window.onload = () => {
+  listenForStartButton();
+  listenForKeyDown();
+}
 
 // Utility Functions
 function cssString(value, unit) {
