@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 3;
+const distancePerSecond = 50;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -202,7 +202,7 @@ function moveSpaceObjects() {
     }
     positionDomObjects();
     if (!gameOver) {
-      // checkForCollision();
+      checkForCollision();
     }
   })
 }
@@ -346,11 +346,17 @@ function displayCrash() {
 }
 
 function landShip() {
+  const $mars = document.createElement('div');
+  $mars.className = 'space__mars';
+  let $astronaut = document.createElement('div');
+  $astronaut.className = 'space__mars__astronaut';
+  $mars.append($astronaut);
+  $space.append($mars);
   $ship.classList.add('ship--landing');
   setTimeout(() => {
     $ship.removeAttribute('style');
     $ship.classList.add('ship--landed');
-  }, 7000);
+  }, 6000);
 }
 
 function displayGameOverCover(win) {
@@ -368,6 +374,11 @@ function displayGameOverCover(win) {
   let buttonMessage = currentLevel < levels.length - 1 && win ? "Continue?" : "Play Again?"
   $cover.innerHTML += `<div class="cover__section cover__section--buttons"><button class="start-button">${buttonMessage}</button></div>`;
   $gameBoard.append($cover); 
+}
+
+function removeMars() {
+  const $mars = document.querySelector('.space__mars');
+  if ($mars) { removeFromDom($mars); }
 }
 
 function removeFromDom($element) {
@@ -403,6 +414,7 @@ function resetGame() {
   speedBoost = false;
   replenishFuel = false;
   resetShip();
+  removeMars();
   showFuelStatus();
   showTripProgress();
   showSpeedStatus();
@@ -443,14 +455,21 @@ function displayLevelInfo() {
 
 function handleGameOver(win) {
   gameOver = true;
+  let delay = 0;
   stop();
-  displayGameOverCover(win);
-  if (fuel <= 0) {
-    $ship.classList.add('ship--empty');
-    $ship.classList.remove('ship--sputter');
+  if (currentLevel === levels.length - 1) {
+    landShip();
+    delay = 7000;
   }
-  currentLevel = incrementLevel(currentLevel, win);
-  listenForStartButton();
+  setTimeout(() => {
+    displayGameOverCover(win);
+    if (fuel <= 0) {
+      $ship.classList.add('ship--empty');
+      $ship.classList.remove('ship--sputter');
+    }
+    currentLevel = incrementLevel(currentLevel, win);
+    listenForStartButton();
+  }, delay);
 }
 
 function incrementLevel(level, win) {
