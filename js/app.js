@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 3;
+const distancePerSecond = 50;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -344,6 +344,11 @@ function displayCrash() {
   }, 500);
 }
 
+function accelerateShipOff() {
+  $ship.classList.add('ship--accelerate');
+  $ship.style.left = null;
+}
+
 function landShip() {
   const $mars = document.createElement('div');
   $mars.className = 'space__mars';
@@ -422,9 +427,10 @@ function resetGame() {
 }
 
 function resetShip() {
-  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed');
+  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed', 'ship--accelerate');
   ship.x = 0;
   ship.y = 5;
+  $ship.removeAttribute('style');
   move$ship();
 }
 
@@ -459,6 +465,8 @@ function handleGameOver(win) {
   if (currentLevel === levels.length - 1 && win) {
     landShip();
     delay = 7000;
+  } else if (win) {
+    accelerateShipOff();
   }
   setTimeout(() => {
     displayGameOverCover(win);

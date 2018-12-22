@@ -166,7 +166,7 @@ body {
   position: absolute;
   width: 100px;
   height: 100px;
-  top: 50%;
+  top: 45%;
   left: 0;
   background-image: url(../assets/shipAnimated.png);
   background-size: contain;
@@ -200,6 +200,11 @@ body {
   transform: scale(1.3,1.3);
   background-size: cover;
   transition: transform 1s, opacity 1s;
+}
+
+.ship--accelerate {
+  left: 105%;
+  transition: left 1s ease-in;
 }
 
 .ship--invisible {
@@ -563,9 +568,6 @@ body {
     top: 70%;
   }
 }
-
-
-
 
 
 
