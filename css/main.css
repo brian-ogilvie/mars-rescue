@@ -258,6 +258,8 @@ body {
   top: 70%;
   left: -10%;
   background-color: red;
+  background-image: url(../assets/game_mars_bg.jpg);
+  background-position: left;
   border-radius: 50% 50% 0 0;
   animation: mars-enter 7s ease-out;
 }

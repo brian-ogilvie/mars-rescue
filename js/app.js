@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 50;
+const distancePerSecond = 3;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -365,7 +365,7 @@ function displayGameOverCover(win) {
   let $section1 = document.createElement('div');
   $section1.classList.add('cover__section', 'cover__section--game-over');
   if (win) {
-    let message = currentLevel < levels.length - 1 ? "Checkpoint Cleared" : "Mission Accomplished";
+    let message = currentLevel < levels.length - 1 ? `Checkpoint ${currentLevel + 1} Cleared` : "Mission Accomplished";
     $section1.innerHTML += `<h1 class="cover__heading">${message}!</h1>`;
   } else {
     $section1.innerHTML += "<h1 class=\"cover__heading cover__heading--failure\">Mission Failure!</h1>";
@@ -457,7 +457,7 @@ function handleGameOver(win) {
   gameOver = true;
   let delay = 0;
   stop();
-  if (currentLevel === levels.length - 1) {
+  if (currentLevel === levels.length - 1 && win) {
     landShip();
     delay = 7000;
   }
