@@ -482,10 +482,21 @@ body {
 }
 
 @keyframes drift {
+  33% {
+    transform: rotate(120deg) scale(0.7.0.7);
+  }
+  66% {
+    transform: rotate(240deg) scale(0.4,0.4);
+  }
   100% {
+    transform: rotate(360deg) scale(0.1,0.1);
     top: 100%;
     left: 70%;
   }
+/*
+  100% {
+    transform: scale(0.5,0.5);
+  }*/
 }
 
 @keyframes sputter {
