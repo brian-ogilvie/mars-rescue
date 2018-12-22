@@ -224,6 +224,12 @@ body {
   left: 33%;
 }
 
+.ship--resetting {
+  transition: none;
+  left: -20%;
+  top: 40%;
+}
+
 .space__object {
   position: absolute;
   transition: opacity 0.5s;

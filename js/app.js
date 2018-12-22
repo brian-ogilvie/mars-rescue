@@ -427,11 +427,15 @@ function resetGame() {
 }
 
 function resetShip() {
-  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed', 'ship--accelerate');
+  $ship.removeAttribute('style');
+  $ship.classList.add('ship--resetting');
+  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed', 'ship--accelerate');  
   ship.x = 0;
   ship.y = 5;
-  $ship.removeAttribute('style');
-  move$ship();
+  setTimeout(() => {
+    $ship.classList.remove('ship--resetting');
+    move$ship();
+  }, 500);
 }
 
 function countdownToRun(count) {
