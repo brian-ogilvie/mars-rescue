@@ -189,7 +189,7 @@ body {
 
 .ship--empty {
   background-image: url('../assets/ship_no_fire.png');
-  animation: spin 4s linear infinite, drift 6s linear;
+  animation: spin 4s linear infinite, drift 6s ease-in;
   transform-origin: 65% 50%;
   opacity: 0;
   transition: opacity 6s ease-in;
@@ -206,6 +206,16 @@ body {
   animation: fade-out 0.3s linear;
   transition: none;
   opacity: 0;
+}
+
+.ship--landing {
+  animation: landing 7s linear;
+}
+
+.ship--landed {
+  transform: rotate(-90deg);
+  top: 60%;
+  left: 30%;
 }
 
 .space__object {
@@ -493,10 +503,6 @@ body {
     top: 100%;
     left: 70%;
   }
-/*
-  100% {
-    transform: scale(0.5,0.5);
-  }*/
 }
 
 @keyframes sputter {
@@ -505,6 +511,22 @@ body {
   }
   20% {
     background-image: url(../assets/ship_no_fire.png);
+  }
+}
+
+@keyframes landing {
+  15% {
+    transform: rotate(-90deg);
+    top: 10%;
+  }
+  25% {
+    /*transform: rotate(-90deg);*/
+    top: 5%;
+  }
+  100% {
+    transform: rotate(-90deg);
+    top: 60%;
+    left: 30%;
   }
 }
 

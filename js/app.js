@@ -61,6 +61,7 @@ function listenForMobileEvents() {
 }
 
 function handleKeyDown(event) {
+  if (event.key === 'l') {landShip();}
   const key = event.key;
   if (gameOver && key === 'Enter') { handleGameStart(); }
   if (gameOver) { return; }
@@ -174,7 +175,6 @@ function reduceFuel() {
   } else {
     fuel -= speedBoost ? 2 * fuelLossPerSecond/60 : fuelLossPerSecond/60;
     if (fuel <= 0) {
-      gameOver = true;
       handleGameOver();
       return;
     }    
@@ -188,7 +188,6 @@ function increaseDistance() {
   distanceTraveled += speedBoost ? intervalRate * 1.5 : intervalRate;
   showTripProgress();
   if (distanceTraveled >= distanceToMars) {
-    gameOver = true;
     handleGameOver(true);
     return;
   }
@@ -203,7 +202,7 @@ function moveSpaceObjects() {
     }
     positionDomObjects();
     if (!gameOver) {
-      checkForCollision();
+      // checkForCollision();
     }
   })
 }
@@ -234,7 +233,6 @@ function checkForCollision() {
         replenishFuel = true;
         removeSpaceObject(object);
       } else {
-        gameOver = true;
         displayCrash();
         handleGameOver();
       }
@@ -259,6 +257,7 @@ const cssModifiers = {
 }
 
 function move$ship(direction) {
+  if ($ship.classList.contains('ship--landing')) { return; }
   const top = getPercentage(ship.y, gridHeight);
   const left = getPercentage(ship.x, gridWidth);
   $ship.style.top = cssString(top, '%');
@@ -346,6 +345,14 @@ function displayCrash() {
   }, 500);
 }
 
+function landShip() {
+  $ship.classList.add('ship--landing');
+  setTimeout(() => {
+    $ship.removeAttribute('style');
+    $ship.classList.add('ship--landed');
+  }, 7000);
+}
+
 function displayGameOverCover(win) {
   let $cover = document.createElement('div');
   $cover.classList.add('cover', 'cover--translucent');
@@ -374,6 +381,7 @@ let addObjectTimeout = null;
 
 function handleGameStart() {
   resetGame();
+
   let $cover = document.querySelector('.cover');
   $cover.classList.add('cover--hidden');
   setTimeout(() => {$cover.remove();}, 500);
@@ -383,13 +391,15 @@ function handleGameStart() {
     displayLevelInfo();
   }, 500);
   // wait for countdown to finish
-  setTimeout(() => {run();}, 4500);
+  setTimeout(() => {
+    gameOver = false;
+    run();
+  }, 4500);
 }
 
 function resetGame() {
   fuel = 100;
   distanceTraveled = 0;
-  gameOver = false;
   speedBoost = false;
   replenishFuel = false;
   resetShip();
@@ -401,10 +411,10 @@ function resetGame() {
 }
 
 function resetShip() {
+  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed');
   ship.x = 0;
   ship.y = 5;
   move$ship();
-  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter');
 }
 
 function countdownToRun(count) {
@@ -432,6 +442,7 @@ function displayLevelInfo() {
 }
 
 function handleGameOver(win) {
+  gameOver = true;
   stop();
   displayGameOverCover(win);
   if (fuel <= 0) {
