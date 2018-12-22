@@ -166,8 +166,8 @@ body {
   position: absolute;
   width: 100px;
   height: 100px;
-  top: 45%;
-  left: 0;
+  left: -20%;
+  top: 40%;
   background-image: url(../assets/shipAnimated.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -226,8 +226,6 @@ body {
 
 .ship--resetting {
   transition: none;
-  left: -20%;
-  top: 40%;
 }
 
 .space__object {
