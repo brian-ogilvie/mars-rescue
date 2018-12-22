@@ -61,7 +61,6 @@ function listenForMobileEvents() {
 }
 
 function handleKeyDown(event) {
-  if (event.key === 'l') {landShip();}
   const key = event.key;
   if (gameOver && key === 'Enter') { handleGameStart(); }
   if (gameOver) { return; }
