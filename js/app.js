@@ -6,7 +6,7 @@ const gridHeight = 12;
 let fuel = 100;
 let distanceTraveled = 0;
 let currentLevel = 0;
-let gameOver = false;
+let gameOver = true;
 let speedBoost = false;
 let replenishFuel = false;
 const fuelLossPerSecond = 5;
@@ -46,7 +46,7 @@ const levels = [
 const ship = new SpaceObject(0,5,2,2);
 let activeObjects = [];
 
-function listenForButtonPress() {
+function listenForStartButton() {
   let $startButton = document.querySelector('.start-button');
   $startButton.addEventListener('click', handleGameStart);
 }
@@ -61,8 +61,9 @@ function listenForMobileEvents() {
 }
 
 function handleKeyDown(event) {
-  if (gameOver) { return }
   const key = event.key;
+  if (gameOver && key === 'Enter') { handleGameStart(); }
+  if (gameOver) { return }
   const acceptableKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 's']
   if (!acceptableKeys.includes(event.key)) {return}
   event.preventDefault();
@@ -328,7 +329,6 @@ function showSpeedStatus() {
 }
 
 function showTripProgress() {
-  // const percent = Math.floor(100 * (distanceTraveled/distanceToMars));
   $distance.style.width = cssString(distanceTraveled, '%');
   if (distanceTraveled >= 85) {
     $distance.classList.add('console__measurement--blink');
@@ -361,7 +361,6 @@ function displayGameOverCover(win) {
   let buttonMessage = currentLevel < levels.length - 1 && win ? "Continue?" : "Play Again?"
   $cover.innerHTML += `<div class="cover__section cover__section--buttons"><button class="start-button">${buttonMessage}</button></div>`;
   $gameBoard.append($cover); 
-  listenForButtonPress();
 }
 
 function removeFromDom($element) {
@@ -390,7 +389,6 @@ function handleGameStart() {
 function resetGame() {
   fuel = 100;
   distanceTraveled = 0;
-  // cancelAnimationFrame(animationRequest);
   gameOver = false;
   speedBoost = false;
   replenishFuel = false;
@@ -398,7 +396,6 @@ function resetGame() {
   showFuelStatus();
   showTripProgress();
   showSpeedStatus();
-  document.body.removeEventListener('keydown', handleKeyDown);
   $mobileArrows.removeEventListener('click', handleMobileArrows);
   $speedStatus.removeEventListener('click', handleS);
 }
@@ -442,6 +439,7 @@ function handleGameOver(win) {
     $ship.classList.remove('ship--sputter');
   }
   currentLevel = incrementLevel(currentLevel, win);
+  listenForStartButton();
 }
 
 function incrementLevel(level, win) {
@@ -473,7 +471,6 @@ function stop() {
 }
 
 function run() {
-  listenForKeyDown();
   listenForMobileEvents();
   fuelSourceInterval = setInterval(() => {
     addObject('fuelSource');
@@ -483,7 +480,8 @@ function run() {
   setTimeout(addObject('debris'), randomDelay);
 };
 
-listenForButtonPress();
+listenForStartButton();
+listenForKeyDown();
 
 // Utility Functions
 function cssString(value, unit) {
