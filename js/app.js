@@ -352,12 +352,14 @@ function displayGameOverCover(win) {
   let $section1 = document.createElement('div');
   $section1.classList.add('cover__section', 'cover__section--game-over');
   if (win) {
-    $section1.innerHTML += "<h1 class=\"cover__heading\">Mission Accomplished!</h1>";
+    let message = currentLevel < levels.length - 1 ? "Checkpoint Cleared" : "Mission Accomplished";
+    $section1.innerHTML += `<h1 class="cover__heading">${message}!</h1>`;
   } else {
     $section1.innerHTML += "<h1 class=\"cover__heading cover__heading--failure\">Mission Failure!</h1>";
   }
   $cover.append($section1);
-  $cover.innerHTML += "<div class=\"cover__section cover__section--buttons\"><button class=\"start-button\">Play Again?</button></div>";
+  let buttonMessage = currentLevel < levels.length - 1 && win ? "Continue?" : "Play Again?"
+  $cover.innerHTML += `<div class="cover__section cover__section--buttons"><button class="start-button">${buttonMessage}</button></div>`;
   $gameBoard.append($cover); 
   listenForButtonPress();
 }
@@ -434,18 +436,20 @@ function displayLevelInfo() {
 
 function handleGameOver(win) {
   stop();
+  displayGameOverCover(win);
   if (fuel <= 0) {
     $ship.classList.add('ship--empty');
     $ship.classList.remove('ship--sputter');
   }
-  if (win) {
-    currentLevel = incrementLevel(currentLevel);
-  }
-  displayGameOverCover(win);
+  currentLevel = incrementLevel(currentLevel, win);
 }
 
-function incrementLevel(level) {
-  return level < levels.length - 1 ? level + 1 : levels.length - 1;
+function incrementLevel(level, win) {
+  if (win) {
+    return level < levels.length - 1 ? level + 1 : 0;
+  } else {
+    return level;
+  }
 }
 
 function requestAnimation() {
