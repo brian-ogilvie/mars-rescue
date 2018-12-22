@@ -63,9 +63,9 @@ function listenForMobileEvents() {
 function handleKeyDown(event) {
   const key = event.key;
   if (gameOver && key === 'Enter') { handleGameStart(); }
-  if (gameOver) { return }
+  if (gameOver) { return; }
   const acceptableKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 's']
-  if (!acceptableKeys.includes(event.key)) {return}
+  if (!acceptableKeys.includes(event.key)) { return; }
   event.preventDefault();
   if (key === 's') {
     handleS();
@@ -113,7 +113,7 @@ function handleMobileArrows(event) {
   rate is how far they will travel per second
 */
 function addObject(className) {
-  if (gameOver) { return };
+  if (gameOver) { return; };
   const level = levels[currentLevel];
   const x = gridWidth;
   const y = Math.floor(Math.random() * gridHeight);
@@ -223,7 +223,7 @@ function removeAllSpaceObjects() {
 }
 
 function checkForCollision() {
-  if (gameOver) { return }
+  if (gameOver) { return; }
   activeObjects.forEach(object => {
     condition1 = object.x < ship.x + ship.size.w;
     condition2 = object.x + object.size.w > ship.x;
@@ -451,7 +451,7 @@ function incrementLevel(level, win) {
 }
 
 function requestAnimation() {
-  if (gameOver) { return }
+  if (gameOver) { return; }
   moveSpaceObjects();
   reduceFuel();
   increaseDistance();
