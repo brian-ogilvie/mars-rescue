@@ -521,10 +521,31 @@ function run() {
   setTimeout(addObject('debris'), randomDelay);
 };
 
+/* This code is from a tutorial on preloading images at
+https://perishablepress.com/preloading-images-with-css-and-javascript/ */
+function preloadImages() {
+  const img1 = new Image();
+  img1.src = './assets/big_debris.png';
+  const img2 = new Image();
+  img2.src = './assets/small_debris.png';
+  const img3 = new Image();
+  img3.src = './assets/fuel_source.png';
+  const img4 = new Image();
+  img4.src = './assets/explode.png';
+  const img5 = new Image();
+  img5.src = './assets/s_light.png';
+  const img6 = new Image();
+  img6.src = './assets/ship_no_fire.png';
+  const img7 = new Image();
+  img7.src = './assets/game_mars_bg.jpg';
+  const img8 = new Image();
+  img8.src = './assets/astronaut.gif';
+}
 
 window.onload = () => {
   listenForStartButton();
   listenForKeyDown();
+  preloadImages();
 }
 
 // Utility Functions
