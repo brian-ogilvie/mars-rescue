@@ -336,6 +336,12 @@ function showTripProgress() {
 
 }
 
+let spaceBackgroundX = 100;
+function moveBackground() {
+  spaceBackgroundX > -100 ? spaceBackgroundX -= 2 : spaceBackgroundX = 100;
+  $space.style.backgroundPosition = cssString(spaceBackgroundX, '%');
+}
+
 function displayCrash() {
   $ship.classList.add('ship--crash');
   $ship.classList.remove('ship--sputter');
@@ -494,6 +500,7 @@ function incrementLevel(level, win) {
 function requestAnimation() {
   if (gameOver) { return; }
   moveSpaceObjects();
+  moveBackground();
   reduceFuel();
   increaseDistance();
   animationRequest = requestAnimationFrame(requestAnimation);

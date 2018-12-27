@@ -157,6 +157,7 @@ body {
   width: 800px;
   height: 600px;
   background-image: url(../assets/stars_bg.jpg);
+  background-attachment: left;
   border-radius: 0 0 7px 7px;
   overflow: hidden;
   cursor: none;
