@@ -142,6 +142,7 @@ body {
 }
 
 .console__arrows {
+  box-sizing: content-box;
   display: none;
   width: 200px;
   height: 200px;
@@ -455,6 +456,7 @@ body {
     width: 500px;
     height: 375px;
     border-radius: 0;
+    animation-duration: 2.4s;
   }
   .ship {
     width: 62.5px;
