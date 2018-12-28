@@ -157,10 +157,14 @@ body {
   width: 800px;
   height: 600px;
   background-image: url(../assets/stars_bg.jpg);
-  background-attachment: left;
   border-radius: 0 0 7px 7px;
   overflow: hidden;
   cursor: none;
+  animation: move-bg 2s linear infinite;
+}
+
+.space--stopped {
+  animation: none;
 }
 
 .ship {
@@ -571,6 +575,15 @@ body {
   }
   to {
     top: 70%;
+  }
+}
+
+@keyframes move-bg {
+  0% {
+    background-position: 450px 0;
+  }
+  100% {
+    background-position: 0 0;
   }
 }
 

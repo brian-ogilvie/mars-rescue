@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 3;
+const distancePerSecond = 50;
 
 class SpaceObject {
   constructor(x, y, w, h) {
@@ -333,13 +333,6 @@ function showTripProgress() {
   } else {
     $distance.classList.remove('console__measurement--blink');
   }
-
-}
-
-let spaceBackgroundX = 100;
-function moveBackground() {
-  spaceBackgroundX > -100 ? spaceBackgroundX -= 2 : spaceBackgroundX = 100;
-  $space.style.backgroundPosition = cssString(spaceBackgroundX, '%');
 }
 
 function displayCrash() {
@@ -362,6 +355,7 @@ function landShip() {
   $astronaut.className = 'space__mars__astronaut';
   $mars.append($astronaut);
   $space.append($mars);
+  $space.classList.add('space--stopped');
   $ship.classList.add('ship--landing');
   setTimeout(() => {
     $ship.removeAttribute('style');
@@ -430,6 +424,7 @@ function resetGame() {
   showSpeedStatus();
   $mobileArrows.removeEventListener('click', handleMobileArrows);
   $speedStatus.removeEventListener('click', handleS);
+  $space.classList.remove('space--stopped');
 }
 
 function resetShip() {
@@ -500,7 +495,6 @@ function incrementLevel(level, win) {
 function requestAnimation() {
   if (gameOver) { return; }
   moveSpaceObjects();
-  moveBackground();
   reduceFuel();
   increaseDistance();
   animationRequest = requestAnimationFrame(requestAnimation);
