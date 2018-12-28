@@ -507,6 +507,9 @@ body {
   .cover {
     border-radius: 0;
   }
+  .cover__ship-selector {
+    width: 90%;
+  }
   .game-board {
     height: 100%;
     width: 100%;
