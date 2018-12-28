@@ -48,7 +48,13 @@ let activeObjects = [];
 
 function listenForStartButton() {
   let $startButton = document.querySelector('.start-button');
-  $startButton.addEventListener('click', handleGameStart);
+  $startButton.addEventListener('click', () => {
+    if ($startButton.classList.contains('show-choice')) {
+      displayShipChooser();
+    } else {
+      handleGameStart();
+    }
+  });
 }
 
 function listenForKeyDown() {
@@ -62,7 +68,14 @@ function listenForMobileEvents() {
 
 function handleKeyDown(event) {
   const key = event.key;
-  if (gameOver && key === 'Enter') { handleGameStart(); }
+  if (gameOver && key === 'Enter') { 
+    const $startButton = document.querySelector('.start-button');
+    if ($startButton.classList.contains('show-choice')) {
+      displayShipChooser();
+    } else {
+      handleGameStart(); 
+    }
+  }
   if (gameOver) { return; }
   const acceptableKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 's']
   if (!acceptableKeys.includes(event.key)) { return; }
@@ -380,6 +393,52 @@ function displayGameOverCover(win) {
   $gameBoard.append($cover); 
 }
 
+function displayShipChooser() {
+  removeCover();
+  const colors = 'grey green blue red brown yellow pink rainbow'.split(' ');
+  const $cover = document.createElement('div');
+  $cover.classList.add('cover', 'cover--under');
+  const $section1 = document.createElement('div');
+  $section1.classList.add('cover__section');
+  $cover.append($section1);
+  const $h2 = document.createElement('h2');
+  $h2.classList.add('cover__heading', 'cover__heading--2');
+  $h2.textContent = 'Choose your ship';
+  $section1.append($h2);
+  const $imgSelector = document.createElement('div');
+  $imgSelector.className = 'cover__ship-selector';
+  $section1.append($imgSelector);
+  colors.forEach(color => {
+    const $img = document.createElement('img');
+    $img.className = 'ship-choice';
+    $img.id = color;
+    $img.src = `./assets/ships/ship_${color}.png`;
+    $img.alt = color;
+    $img.addEventListener('click', chooseShip);
+    $imgSelector.append($img);
+  })
+  const $section2 = document.createElement('div');
+  $section2.classList.add('cover__section', 'cover__section--buttons');
+  $section2.innerHTML = `<button class="start-button">Play Now!</button>`;
+  $cover.append($section2);
+  $gameBoard.append($cover);
+  //wait for previous cover to be gone
+  setTimeout(() => {
+    listenForStartButton();
+  }, 500);
+}
+
+function chooseShip(event) {
+  const thisImg = event.target
+  const color = thisImg.id;
+  const allImages = Array.from(document.querySelectorAll('.ship-choice'));
+  allImages.map(img => {
+    img.classList.remove('ship-choice--selected');
+  });
+  thisImg.classList.add('ship-choice--selected');
+  chosenShip = color;
+}
+
 function removeMars() {
   const $mars = document.querySelector('.space__mars');
   if ($mars) { removeFromDom($mars); }
@@ -393,13 +452,17 @@ function removeFromDom($element) {
 let animationRequest = null;
 let fuelSourceInterval = null;
 let addObjectTimeout = null;
+let chosenShip = 'grey';
 
-function handleGameStart() {
-  resetGame();
-
+function removeCover() {
   let $cover = document.querySelector('.cover');
   $cover.classList.add('cover--hidden');
   setTimeout(() => {$cover.remove();}, 500);
+}
+
+function handleGameStart() {
+  resetGame();
+  removeCover();
   //wait for cover to be gone
   setTimeout(() => {
     countdownToRun(3);
@@ -430,7 +493,9 @@ function resetGame() {
 function resetShip() {
   $ship.removeAttribute('style');
   $ship.classList.add('ship--resetting');
-  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed', 'ship--accelerate');  
+  $ship.classList.remove('ship--crash', 'ship--invisible', 'ship--empty', 'ship--sputter', 'ship--landing', 'ship--landed', 'ship--accelerate');
+  $ship.classList.remove('ship--grey','ship--red','ship--yellow','ship--blue','ship--green','ship--brown','ship--pink','ship--rainbow');  
+  $ship.classList.add(`ship--${chosenShip}`);
   ship.x = 0;
   ship.y = 5;
   setTimeout(() => {

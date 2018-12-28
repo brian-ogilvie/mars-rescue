@@ -174,11 +174,56 @@ body {
   height: 100px;
   left: -20%;
   top: 40%;
-  background-image: url(../assets/shipAnimated.png);
+  background-image: url(../assets/ships/ship_grey.png);
   background-size: contain;
   background-repeat: no-repeat;
   transition: top .3s, left .3s, transform 0.3s;
   z-index: 1;
+}
+
+.ship--grey {
+  background-image: url(../assets/ships/ship_grey.png);
+}
+.ship--red {
+  background-image: url(../assets/ships/ship_red.png);
+}
+.ship--yellow {
+  background-image: url(../assets/ships/ship_yellow.png);
+}
+.ship--blue {
+  background-image: url(../assets/ships/ship_blue.png);
+}
+.ship--green {
+  background-image: url(../assets/ships/ship_green.png);
+}
+.ship--brown {
+  background-image: url(../assets/ships/ship_brown.png);
+}
+.ship--pink {
+  background-image: url(../assets/ships/ship_pink.png);
+}
+.ship--rainbow {
+  background-image: url(../assets/ships/ship_rainbow.png);
+}
+
+.ship::before, .ship::after {
+  content: "";
+  background-image: url(../assets/fire.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 44%;
+  height: 11%;
+  position: absolute;
+}
+
+.ship::before {
+  top: 4%;
+  left: 0;
+}
+
+.ship::after {
+  bottom: 4%;
+  left: 0;
 }
 
 .ship--up {
@@ -189,16 +234,19 @@ body {
   transform: rotate(10deg);
 }
 
-.ship--sputter {
+.ship--sputter::before, .ship--sputter::after {
   animation: sputter 0.5s step-start 0s infinite;
 }
 
 .ship--empty {
-  background-image: url('../assets/ship_no_fire.png');
   animation: spin 4s linear infinite, drift 6s ease-in;
   transform-origin: 65% 50%;
   opacity: 0;
   transition: opacity 6s ease-in;
+}
+
+.ship--empty::before, .ship--empty::after {
+  background: none;
 }
 
 .ship--crash {
@@ -206,6 +254,10 @@ body {
   transform: scale(1.3,1.3);
   background-size: cover;
   transition: transform 1s, opacity 1s;
+}
+
+.ship--crash::before, .ship--crash::after, .ship--landed::before, .ship--landed::after {
+  background-image: none;
 }
 
 .ship--accelerate {
@@ -225,7 +277,6 @@ body {
 
 .ship--landed {
   transform: rotate(-90deg);
-  background-image: url(../assets/ship_no_fire.png);
   top: 60%;
   left: 33%;
 }
@@ -300,8 +351,12 @@ body {
   overflow: hidden;
   background-color: black;
   border-radius: 7px;
-  z-index: 2;
+  z-index: 3;
   transition: top 0.5s ease-in, bottom 0.5s ease-in, opacity 0.5s;
+}
+
+.cover--under {
+  z-index: 2;
 }
 
 .cover--full-page {
@@ -374,6 +429,16 @@ body {
   animation: pulse 1s linear infinite;
 }
 
+.cover__ship-selector {
+  width: 70%;
+  margin: 20px auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  animation: shift 4s linear infinite;
+}
+
 .instructions--mobile {
   display: none;
 }
@@ -386,6 +451,27 @@ body {
 
 .cover__img--debris {
   animation: spin 0.5s linear infinite;
+}
+
+.ship-choice {
+  box-sizing: content-box;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  background-image: url(../assets/stars_bg.jpg);
+  border: 4px ridge darkgrey;
+  border-radius: 7px;
+  transition: border-color 0.3s;
+  cursor: pointer;
+}
+
+.ship-choice:hover {
+  border-color: white;
+}
+
+.ship-choice--selected, .ship-choice--selected:hover {
+  border-color: gold;
+  animation: pulse 1s linear infinite, move-bg 2s linear infinite;
 }
 
 .start-button {
@@ -494,6 +580,18 @@ body {
   }
 }
 
+@keyframes shift {
+  0%, 100% {
+    transform: translate(0,0);
+  }
+  25% {
+    transform: translate(0.5%, 0);
+  }
+  75% {
+    transform: translate(-0.5%, 0);
+  }
+}
+
 @keyframes blink {
   50% {
     opacity: .5;
@@ -548,10 +646,10 @@ body {
 
 @keyframes sputter {
   0% {
-    background-image: url(../assets/shipAnimated.png);
+    background-image: url(../assets/fire.png);
   }
   20% {
-    background-image: url(../assets/ship_no_fire.png);
+    background-image: none;
   }
 }
 
