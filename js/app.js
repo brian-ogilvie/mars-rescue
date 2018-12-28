@@ -12,7 +12,7 @@ let replenishFuel = false;
 const fuelLossPerSecond = 5;
 const fuelReplenishPerSecond = 50;
 const distanceToMars = 100;
-const distancePerSecond = 50;
+const distancePerSecond = 3;
 
 class SpaceObject {
   constructor(x, y, w, h) {

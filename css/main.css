@@ -160,7 +160,7 @@ body {
   border-radius: 0 0 7px 7px;
   overflow: hidden;
   cursor: none;
-  animation: move-bg 2s linear infinite;
+  animation: move-bg 1.5s linear infinite;
 }
 
 .space--stopped {
@@ -586,13 +586,3 @@ body {
     background-position: 0 0;
   }
 }
-
-
-
-
-
-
-
-
-
-
