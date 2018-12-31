@@ -389,7 +389,8 @@ function displayGameOverCover(win) {
   }
   $cover.append($section1);
   let buttonMessage = currentLevel < levels.length - 1 && win ? "Continue?" : "Play Again?"
-  $cover.innerHTML += `<div class="cover__section cover__section--buttons"><button class="start-button">${buttonMessage}</button></div>`;
+  const classList = win && currentLevel === 2 ? 'start-button show-choice' : 'start-button'
+  $cover.innerHTML += `<div class="cover__section cover__section--buttons"><button class="${classList}">${buttonMessage}</button></div>`;
   $gameBoard.append($cover); 
 }
 
