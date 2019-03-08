@@ -108,7 +108,7 @@ body {
 .console__measurement {
   height: 100%;
   border-radius: 0 5px 5px 0;
-  border: 1px solid rgba(0,0,0,0.5));
+  border: 1px solid rgba(0,0,0,0.5);
 }
 
 .console__measurement--blink {
@@ -500,7 +500,7 @@ body {
   }
 }
 
-@media only screen and (max-width: 816px) {
+@media only screen and (max-width: 816px), screen and (hover: none) {
   html, body {
     font-size: 13px; 
   }
@@ -517,7 +517,8 @@ body {
     border-radius: 0;
     display: flex;
     flex-flow: row-reverse nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
     background: none;
   }
   .start-button {
@@ -542,6 +543,12 @@ body {
   }
   .console__speed {
     order: -1;
+  }
+  .space-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 61%;
   }
   .space {
     width: 500px;
