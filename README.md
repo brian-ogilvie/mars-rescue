@@ -2,7 +2,7 @@
 Your Mission: Following an equipment failure, humanity's top astrobiologist is stranded on Mars. NASA needs you to pilot the rescue mission. You will have to navigate a treacherous journey, littered with space debris. You will also need to collect fuel floating in space along the way. If you run out of fuel or collide with debris, your mission is a failure. Humanity is counting on you!
 
 ## Deployed Game: 
-[Click here to play Mars Rescue now!](https://pages.git.generalassemb.ly/brianogilvie/mars-rescue/)
+[Click here to play Mars Rescue now!](https://mars-rescue.netlify.com/)
 
 ## How To Play:
 Your mission is a success when your trip progress meter reaches 100%. You'll have to dodge all the debris and collect sufficient fuel to last that long.
